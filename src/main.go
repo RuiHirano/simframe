@@ -10,6 +10,7 @@ func main() {
     agents := []model.IAgent{
 		mymodel.NewTrain("1"),
 		mymodel.NewTrain("2"),
+		mymodel.NewCar("3"),
 	}
 
 	var en engine.IEngine
