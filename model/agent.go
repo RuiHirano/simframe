@@ -2,6 +2,8 @@ package model
 
 import (
 	"fmt"
+
+	"github.com/RuiHirano/simframe/util"
 )
 
 type IAgent interface {
@@ -11,6 +13,7 @@ type IAgent interface {
 
 type Agent struct {
 	ID string
+	Position *util.Position
 }
 
 func NewAgent(id string) *Agent {
