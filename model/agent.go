@@ -16,15 +16,16 @@ type Agent struct {
 	Position *util.Position
 }
 
-func NewAgent(id string) *Agent {
+func NewAgent(id string, position *util.Position) *Agent {
 
 	agent := &Agent{
 		ID: id,
+		Position: position,
 	}
 
 	return agent
 }
 
 func (agent *Agent) Status() {
-	fmt.Printf("Status %s\n", agent.ID)
+	fmt.Printf("Status %s %v\n", agent.ID, agent.Position)
 }

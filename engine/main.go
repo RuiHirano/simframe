@@ -1,7 +1,9 @@
 package engine
 
 import (
-	"github.com/RuiHirano/simframe/model"
+	"fmt"
+
+	"github.com/RuiHirano/simframe/scenario"
 )
 
 type IEngine interface {
@@ -10,28 +12,22 @@ type IEngine interface {
 
 type Engine struct {
 	ID string
-	Agents []model.IAgent
-	Clock IClock
+	Scenarios []scenario.IScenario
 }
 
-func NewEngine(agents []model.IAgent) *Engine {
+func NewEngine(scenarios []scenario.IScenario) *Engine {
 
 	engine := &Engine{
 		ID: "0",
-		Agents: agents,
-		Clock: NewClock(),
+		Scenarios: scenarios,
 	}
 
 	return engine
 }
 
 func (engine *Engine) Run() {
-	for i := 0; i < 10; i++ {
-		for _, agent := range engine.Agents{
-			agent.Step()
-			agent.Status()
-		}
-		engine.Clock.Forward()
-		engine.Clock.GetTimestamp()
+	fmt.Printf("Run Engine\n")
+	for _, scenario := range engine.Scenarios{
+		scenario.Run()
 	}
 }

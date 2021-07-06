@@ -3,6 +3,8 @@ package train
 import (
 	"fmt"
 
+	"github.com/RuiHirano/simframe/util"
+
 	"github.com/RuiHirano/simframe/model"
 )
 
@@ -10,10 +12,10 @@ type Car struct {
 	*model.Agent
 }
 
-func NewCar(id string) *Car {
+func NewCar(id string, position *util.Position) *Car {
 
 	car := &Car{
-		model.NewAgent(id),
+		model.NewAgent(id, position),
 	}
 
 	return car
