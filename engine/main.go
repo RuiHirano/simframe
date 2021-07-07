@@ -29,5 +29,6 @@ func (engine *Engine) Run() {
 	fmt.Printf("Run Engine\n")
 	for _, scenario := range engine.Scenarios{
 		scenario.Run()
+		// Run scenario in docker container
 	}
 }

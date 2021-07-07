@@ -18,6 +18,9 @@ func main() {
 	var sn scenario.IScenario
 	sn = scenario.NewScenario(agents)
 
+	//var sn2 scenario.IScenario
+	//sn2 = scenario.NewScenario(agents)
+
 	var en engine.IEngine
 	en = engine.NewEngine([]scenario.IScenario{sn})
 	en.Run()

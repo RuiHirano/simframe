@@ -22,5 +22,11 @@ func NewCar(id string, position *util.Position) *Car {
 }
 
 func (car *Car) Step() {
-	fmt.Printf("Car %s step\n", car.ID)
+	fmt.Printf("Car %s step : %v\n", car.ID, car.Position)
+	car.Position = car.NextPosition()
+}
+
+func (car *Car) NextPosition() *util.Position{
+	nextPosition := &util.Position{X: car.Position.X+1, Y: car.Position.Y+1}
+	return nextPosition
 }
