@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/RuiHirano/simframe/config"
 	"github.com/RuiHirano/simframe/engine"
 	"github.com/RuiHirano/simframe/model"
 	"github.com/RuiHirano/simframe/scenario"
@@ -15,13 +16,16 @@ func main() {
 		mymodel.NewCar("3", &util.Position{X: 1, Y: 5}),
 	}
 
-	var sn scenario.IScenario
-	sn = scenario.NewScenario(agents)
+	area := scenario.NewArea()
 
-	//var sn2 scenario.IScenario
-	//sn2 = scenario.NewScenario(agents)
+	clock := scenario.NewClock()
 
-	var en engine.IEngine
-	en = engine.NewEngine([]scenario.IScenario{sn})
+	sn := scenario.NewScenario(agents, area, clock)
+
+	config := config.NewConfig(&config.ConfigParams{
+		ServerNum: 1,
+	})
+
+	en := engine.NewEngine([]scenario.IScenario{sn}, config)
 	en.Run()
 }

@@ -15,13 +15,13 @@ type Scenario struct {
 	Area IArea
 }
 
-func NewScenario(agents []model.IAgent) *Scenario {
+func NewScenario(agents []model.IAgent, area IArea, clock IClock) *Scenario {
 
 	scenario := &Scenario{
 		ID: "0",
 		Agents: agents,
-		Clock: NewClock(),
-		Area: NewArea(),
+		Clock: clock,
+		Area: area,
 	}
 
 	return scenario
