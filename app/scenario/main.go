@@ -6,6 +6,7 @@ import (
 
 type IScenario interface {
 	Run()
+	Step()
 }
 
 type Scenario struct {
@@ -27,6 +28,7 @@ func NewScenario(agents []model.IAgent, area IArea, clock IClock) *Scenario {
 	return scenario
 }
 
+// TODO: Remove Run
 func (scenario *Scenario) Run() {
 	scenario.Area.GetSpace()
 	for i := 0; i < 10; i++ {
@@ -37,4 +39,13 @@ func (scenario *Scenario) Run() {
 		scenario.Clock.Forward()
 		scenario.Clock.GetTimestamp()
 	}
+}
+
+func (scenario *Scenario) Step(nbAgents []model.IAgent) {
+	for _, agent := range scenario.Agents{
+		agent.Step()
+		agent.Status()
+	}
+	scenario.Clock.Forward()
+	scenario.Clock.GetTimestamp()
 }

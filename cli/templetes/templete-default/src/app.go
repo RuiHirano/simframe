@@ -1,23 +1,24 @@
 package main
 
 import (
+	"github.com/RuiHirano/simframe/builder"
 	"github.com/RuiHirano/simframe/config"
-	"github.com/RuiHirano/simframe/engine"
 	"github.com/RuiHirano/simframe/scenario"
 	myscenario "github.com/RuiHirano/simframe/src/scenario"
 )
 
-// TODO: Hide here from user
-func main() {
+type Builder struct{
+	builder.Builder
+}
 
-	// docker内でここを実行する。
-
+func (bd *Builder) Scenarios() []scenario.IScenario{
 	sn := myscenario.NewScenario1()
+	return []scenario.IScenario{sn}
+}
 
+func (bd *Builder) Config() config.IConfig{
 	config := config.NewConfig(&config.ConfigParams{
 		ServerNum: 1,
 	})
-
-	en := engine.NewEngine([]scenario.IScenario{sn}, config)
-	en.Run()
+	return config
 }

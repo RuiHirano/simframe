@@ -1,37 +1,53 @@
-package engine
+package main
 
 import (
 	"fmt"
 
-	"github.com/RuiHirano/simframe/config"
-	"github.com/RuiHirano/simframe/scenario"
+	ap "github.com/RuiHirano/simframe/app"
+	"github.com/RuiHirano/simframe/builder"
+	"github.com/RuiHirano/simframe/engine/pads/master"
+	"github.com/RuiHirano/simframe/engine/pads/worker"
 )
 
 type IEngine interface {
-	Run()
+	Build()
+	RunPads()
 }
 
 type Engine struct {
-	ID string 
-	Scenarios []scenario.IScenario
-	Config config.IConfig
+	App ap.App
 }
 
-func NewEngine(scenarios []scenario.IScenario, conf config.IConfig) *Engine {
+func NewEngine(app ap.App) *Engine {
 
 	engine := &Engine{
-		ID: "0",
-		Scenarios: scenarios,
-		Config: conf,
+		App: app,
 	}
 
 	return engine
 }
 
-func (engine *Engine) Run() {
-	fmt.Printf("Run Engine\n")
-	for _, scenario := range engine.Scenarios{
-		scenario.Run()
-		// Run scenario in docker container
+func (engine *Engine) RunPads() {
+	runType := "WORKER"
+	if runType == "MASTER"{
+		master := master.NewMaster()
+		master.Serve()
+		master.Run()
+	}else if runType == "WORKER"{
+		worker := worker.NewWorker()
+		worker.Serve()
+		worker.Run()
 	}
+}
+
+func (engine *Engine) Build() {
+	fmt.Printf("build")
+	bd := builder.Builder
+	bd.Build(engine.App)
+}
+
+
+func main(){
+	fmt.Printf("main")
+	
 }

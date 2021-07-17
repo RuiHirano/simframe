@@ -40,6 +40,17 @@ dmitri.shuralyov.com/gpu/mtl v0.0.0-20190408044501-666a987793e9/go.mod h1:H6x//7
 github.com/BurntSushi/toml v0.3.1/go.mod h1:xHWCNGjB5oqiDr8zfno3MHue2Ht5sIBksp03qcyfWMU=
 github.com/BurntSushi/xgb v0.0.0-20160522181843-27f122750802/go.mod h1:IVnqGOEym/WlBOVXweHU+Q+/VP0lqqI8lqeDx9IjBqo=
 github.com/RuiHirano/simframe v0.0.0-20210706213147-662b9720f8ee h1:47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=
+github.com/RuiHirano/simframe v0.0.0-20210711094948-052f1fdaf5f6 h1:duCVXBxW4qEsVX/Keaef5W+Uwcb+//bUtgYnc6vaRQA=
+github.com/RuiHirano/simframe/config v0.0.0-20210711094948-052f1fdaf5f6 h1:LmzVcjTRuDYZGcPM57XnhqKJ7nrmyif937Okhji1kjM=
+github.com/RuiHirano/simframe/config v0.0.0-20210711094948-052f1fdaf5f6/go.mod h1:/S+DABg3puolumVwqw7w3b5mOSBYUVYKYLqODN48kpI=
+github.com/RuiHirano/simframe/engine v0.0.0-20210711094948-052f1fdaf5f6 h1:vJ9E3BFtkoDm0FLQoWGBZaLD1BG00s/Ylz0qbbeLtr4=
+github.com/RuiHirano/simframe/engine v0.0.0-20210711094948-052f1fdaf5f6/go.mod h1:Ie+04YqB0INYcRftb/9VyUluvQcu5cXMcB4y94ZUtlM=
+github.com/RuiHirano/simframe/model v0.0.0-20210711094948-052f1fdaf5f6 h1:ZOM/BqbANbZEe28Xk8hMqQ0GcihwWj3nyEt26NEnN4I=
+github.com/RuiHirano/simframe/model v0.0.0-20210711094948-052f1fdaf5f6/go.mod h1:R2lw0c43IIciDgBA+hTnP6Uq8iaL7PDZIy/fLIzKGX0=
+github.com/RuiHirano/simframe/scenario v0.0.0-20210711094948-052f1fdaf5f6 h1:H2nL8Tzpe9XHQcnog5ov7kbT3XlQP1MoiataeRHt/94=
+github.com/RuiHirano/simframe/scenario v0.0.0-20210711094948-052f1fdaf5f6/go.mod h1:sefslj6ZdfRjuq68NdHmled5ueIlFFJV2LHa3wgn0HA=
+github.com/RuiHirano/simframe/util v0.0.0-20210711094948-052f1fdaf5f6 h1:gRt4Bs8/goZ98jjfkL/okBSPYBbTR9V0WNqaKA2Epac=
+github.com/RuiHirano/simframe/util v0.0.0-20210711094948-052f1fdaf5f6/go.mod h1:UgRxgO3wP52+uIvQPb504o+U5fSc83J3aNdwlspU+Fc=
 github.com/antihax/optional v1.0.0/go.mod h1:uupD/76wgC+ih3iEmQUL+0Ugr19nfwCT1kdvxnR2qWY=
 github.com/armon/circbuf v0.0.0-20150827004946-bbbad097214e/go.mod h1:3U/XgcO3hCbHZ8TKRvWD2dDTCfh9M9ya+I9JpbB7O8o=
 github.com/armon/go-metrics v0.0.0-20180917152333-f0300d1749da/go.mod h1:Q73ZrmVTwzkszR9V5SSuryQ31EELlFMUz1kKyl939pY=

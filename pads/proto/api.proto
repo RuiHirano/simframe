@@ -1,0 +1,68 @@
+syntax = "proto3";
+
+package api;
+
+option go_package="api";
+
+service MasterService {
+    rpc RegisterWorker(RegisterWorkerRequest) returns (RegisterWorkerResponse){}
+    rpc UpdateWorker(UpdateWorkerRequest) returns (UpdateWorkerResponse){}
+}
+
+message RegisterWorkerRequest{
+    Worker worker = 1;
+}
+
+message RegisterWorkerResponse{
+}
+
+message UpdateWorkerRequest{
+    Worker worker = 1;
+}
+
+message UpdateWorkerResponse{
+}
+
+service WorkerService {
+    rpc RunWorker(RunWorkerRequest) returns (RunWorkerResponse){}
+    rpc GetAgents(GetAgentsRequest) returns (GetAgentsResponse){}
+}
+
+message RunWorkerRequest{
+}
+
+message RunWorkerResponse{
+}
+
+message GetAgentsRequest{
+}
+
+message GetAgentsResponse{
+    repeated Agent agents = 1;
+}
+
+
+message Master {
+    uint64 id = 1;
+	string server_address = 2;
+}
+
+message Worker {
+    uint64 id = 1;
+	string server_address = 2;
+    repeated Worker neighbor_workers = 3;
+}
+
+message Agent {
+    uint64 id = 1;
+    string data = 2;
+}
+
+message BasicResponse {
+    StatusType status = 1;
+}
+
+enum StatusType {
+    OK = 0;
+    ERROR = 1;
+}

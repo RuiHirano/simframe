@@ -115,7 +115,7 @@ func CreateProject(projectName string, templeteName string){
     color.Green("$ cd %s\n$ simcli start\n", projectName)
 }
 
-func Run(){
+func Init(){
     projectName := GetProjectName()
     templeteName := GetTempleteName()
 	fmt.Printf("Project Name is %q\n", projectName)
@@ -128,7 +128,7 @@ var initCmd = &cobra.Command{
     Short: "command line calculator",
     Run: func(cmd *cobra.Command, args []string) {
         fmt.Println("Init command")
-        Run()
+        Init()
     },
 }
 
