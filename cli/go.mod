@@ -7,6 +7,7 @@ replace github.com/RuiHirano/simframe/builder => ../builder
 go 1.13
 
 require (
+	github.com/RuiHirano/simframe/builder v0.0.0-00010101000000-000000000000
 	github.com/briandowns/spinner v1.16.0
 	github.com/fatih/color v1.12.0
 	github.com/manifoldco/promptui v0.8.0
