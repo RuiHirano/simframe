@@ -91,4 +91,8 @@ func (bd *Builder) Build(){
 	bd.CreateBuildDirectory()
 	bd.BuildDockerImage()
 	bd.GenerateK8sResource()
+
+	color.Green("Built project!\n\n")
+    color.Green("You can run project by below command\n\n")
+    color.Green("$ simcli run\n")
 }
