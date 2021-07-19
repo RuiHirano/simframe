@@ -1,4 +1,4 @@
-module github.com/RuiHirano/simframe/engine
+module github.com/RuiHirano/simframe/pads
 
 go 1.13
 
