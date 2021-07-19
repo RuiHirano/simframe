@@ -8,8 +8,8 @@ import (
 
 	api "github.com/RuiHirano/simframe/engine/proto"
 
-	"github.com/RuiHirano/simframe/model"
-	"github.com/RuiHirano/simframe/scenario"
+	"github.com/RuiHirano/simframe/app/model"
+	"github.com/RuiHirano/simframe/app/scenario"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
 )
