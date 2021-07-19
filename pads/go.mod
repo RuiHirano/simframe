@@ -9,8 +9,6 @@ replace (
 )
 
 require (
-	github.com/RuiHirano/simframe/model v0.0.0-20210711094948-052f1fdaf5f6
-	github.com/RuiHirano/simframe/scenario v0.0.0-20210711094948-052f1fdaf5f6
 	github.com/RuiHirano/simframe/util v0.0.0-20210711094948-052f1fdaf5f6 // indirect
 	github.com/golang/protobuf v1.5.0
 	google.golang.org/grpc v1.39.0
