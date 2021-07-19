@@ -1,4 +1,4 @@
-package scenario
+package github.com/RuiHirano/simframe/app/scenario
 
 import (
 	"github.com/RuiHirano/simframe/app/model"
