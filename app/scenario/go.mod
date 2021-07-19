@@ -1,4 +1,4 @@
-module github.com/RuiHirano/simframe/scenario
+module github.com/RuiHirano/simframe/app/scenario
 
 go 1.13
 
