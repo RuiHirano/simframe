@@ -1,7 +1,7 @@
 package scenario
 
 import (
-	"github.com/RuiHirano/simframe/model"
+	"github.com/RuiHirano/simframe/app/model"
 )
 
 type IScenario interface {
