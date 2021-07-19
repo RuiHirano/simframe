@@ -1,9 +1,8 @@
 package scenario
 
 import (
-
-	"github.com/RuiHirano/simframe/model"
-	"github.com/RuiHirano/simframe/scenario"
+	"github.com/RuiHirano/simframe/app/model"
+	"github.com/RuiHirano/simframe/app/scenario"
 	mymodel "github.com/RuiHirano/simframe/src/model"
 	"github.com/RuiHirano/simframe/util"
 )

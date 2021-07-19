@@ -7,7 +7,7 @@ import (
 
 // TODO: Hide here from user
 func main() {
-	ap := App(app.NewApp())
+	ap := App{app.NewApp()}
 
 	en := engine.NewEngine(ap)
 	en.Run()
