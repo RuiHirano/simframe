@@ -87,7 +87,21 @@ func (bd *Builder) CreateBuildDirectory(){
     }
 }
 
+func (bd *Builder) GetApp(){
+	raw, err := ioutil.ReadFile(fmt.Sprintf("%s/simframe.config.json", currentDirPath))
+	if err != nil{
+		os.Exit(1)
+	}
+	var sc *util.SimFrameConfig
+	json.Unmarshal(raw, sc)
+
+	entry := sc.Entry
+	fmt.Printf(entry)
+}
+
+
 func (bd *Builder) Build(){
+	bd.GetApp()
 	bd.CreateBuildDirectory()
 	bd.BuildDockerImage()
 	bd.GenerateK8sResource()

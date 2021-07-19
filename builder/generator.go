@@ -261,30 +261,10 @@ func (bd *Generator) NewWorker(area Area) Resource {
 		Spec: Spec{
 			Containers: []Container{
 				{
-					Name:            "worker-provider",
-					Image:           fmt.Sprintf("%s/worker-provider:%s", "test", "1.0.0"),
-					ImagePullPolicy: "IfNotPresent",
+					Name:            "simframe-simulator",
+					Image:           fmt.Sprintf("simframe/%s:%s", "sample","1.0.0"),
+					ImagePullPolicy: "Never",
 					Env: []Env{
-						{
-							Name:  "SX_NODESERV_ADDRESS",
-							Value: workerName + ":9000",
-						},
-						{
-							Name:  "SX_SERVER_ADDRESS",
-							Value: workerName + ":10000",
-						},
-						{
-							Name:  "SX_MASTER_NODESERV_ADDRESS",
-							Value: "master:9000",
-						},
-						{
-							Name:  "SX_MASTER_SERVER_ADDRESS",
-							Value: "master:10000",
-						},
-						{
-							Name:  "PROVIDER_NAME",
-							Value: "WorkerProvider" + strconv.Itoa(area.Id),
-						},
 					},
 				},
 			},
@@ -334,30 +314,10 @@ func (bd *Generator) NewMaster() Resource {
 		Spec: Spec{
 			Containers: []Container{
 				{
-					Name:            "synerex-nodeserv",
-					Image:           fmt.Sprintf("%s/synerex-nodeserv:%s", "test", "1.0.0"),
-					ImagePullPolicy: "IfNotPresent",
+					Name:            "simframe-simulator",
+					Image:           fmt.Sprintf("simframe/%s:%s", "sample","1.0.0"),
+					ImagePullPolicy: "Never",
 					Env: []Env{
-						{
-							Name:  "SX_NODESERV_HOST",
-							Value: "master",
-						},
-						{
-							Name:  "SX_NODESERV_PORT",
-							Value: "9000",
-						},
-						{
-							Name:  "SX_NODESERV_VERSION",
-							Value: "false",
-						},
-						{
-							Name:  "SX_NODESERV_VEBOSE",
-							Value: "false",
-						},
-						{
-							Name:  "SX_NODESERV_RESTART",
-							Value: "false",
-						},
 					},
 					Ports: []Port{{ContainerPort: 9000}},
 				},
