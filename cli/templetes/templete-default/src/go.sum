@@ -41,6 +41,7 @@ github.com/BurntSushi/toml v0.3.1/go.mod h1:xHWCNGjB5oqiDr8zfno3MHue2Ht5sIBksp03
 github.com/BurntSushi/xgb v0.0.0-20160522181843-27f122750802/go.mod h1:IVnqGOEym/WlBOVXweHU+Q+/VP0lqqI8lqeDx9IjBqo=
 github.com/RuiHirano/simframe v0.0.0-20210706213147-662b9720f8ee h1:47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=
 github.com/RuiHirano/simframe v0.0.0-20210711094948-052f1fdaf5f6 h1:duCVXBxW4qEsVX/Keaef5W+Uwcb+//bUtgYnc6vaRQA=
+github.com/RuiHirano/simframe v0.0.0-20210717054325-c0353a2eebeb h1:MLArrfZL7L9FM6mKJMfxsfdpXOcIWo4gwdUe8/hJW2o=
 github.com/RuiHirano/simframe/config v0.0.0-20210711094948-052f1fdaf5f6 h1:LmzVcjTRuDYZGcPM57XnhqKJ7nrmyif937Okhji1kjM=
 github.com/RuiHirano/simframe/config v0.0.0-20210711094948-052f1fdaf5f6/go.mod h1:/S+DABg3puolumVwqw7w3b5mOSBYUVYKYLqODN48kpI=
 github.com/RuiHirano/simframe/engine v0.0.0-20210711094948-052f1fdaf5f6 h1:vJ9E3BFtkoDm0FLQoWGBZaLD1BG00s/Ylz0qbbeLtr4=

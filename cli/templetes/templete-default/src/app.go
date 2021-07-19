@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/RuiHirano/simframe/app"
-	"github.com/RuiHirano/simframe/config"
+	"github.com/RuiHirano/simframe/app/config"
 	"github.com/RuiHirano/simframe/scenario"
 	myscenario "github.com/RuiHirano/simframe/src/scenario"
 )
