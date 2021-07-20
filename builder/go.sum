@@ -1,3 +1,9 @@
+github.com/RuiHirano/simframe v1.0.1-beta h1:E7S9BTZh70DdEyN6WQLRCxYxRJCiWWYjHhuo1inexAg=
+github.com/RuiHirano/simframe/app v0.0.0-20210719111851-b4da8dce121e h1:r/qBD9KOOAQcXZnCREYSgojO11zG9XJD4e39UNb1KDU=
+github.com/RuiHirano/simframe/app/model v0.0.0-20210719110251-67410cebd78a h1:f2rX4usAXcgJCkEIYMbTCbxaZp8AtNci/hWoe+pmrrY=
+github.com/RuiHirano/simframe/app/model v0.0.0-20210719110251-67410cebd78a/go.mod h1:NmHZclrzdJZt+REJ3+jQ8RprfThhVsmNo1TXGBkD5gs=
+github.com/RuiHirano/simframe/util v0.0.0-20210719111851-b4da8dce121e h1:ocmalvFOFljxXPZ4UrV2Jnh0cvXVAaVFEE4F7Z2z4vs=
+github.com/RuiHirano/simframe/util v0.0.0-20210719111851-b4da8dce121e/go.mod h1:UgRxgO3wP52+uIvQPb504o+U5fSc83J3aNdwlspU+Fc=
 github.com/briandowns/spinner v1.16.0 h1:DFmp6hEaIx2QXXuqSJmtfSBSAjRmpGiKG6ip2Wm/yOs=
 github.com/briandowns/spinner v1.16.0/go.mod h1:QOuQk7x+EaDASo80FEXwlwiA+j/PPIcX3FScO+3/ZPQ=
 github.com/fatih/color v1.7.0 h1:DkWD4oS2D8LGGgTQ6IvwJJXSL5Vp2ffcQg58nFV38Ys=

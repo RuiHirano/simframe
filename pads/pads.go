@@ -3,8 +3,8 @@ package pads
 import (
 	"github.com/RuiHirano/simframe/app/config"
 	"github.com/RuiHirano/simframe/app/scenario"
-	"github.com/RuiHirano/simframe/engine/master"
-	"github.com/RuiHirano/simframe/engine/worker"
+	"github.com/RuiHirano/simframe/pads/master"
+	"github.com/RuiHirano/simframe/pads/worker"
 )
 
 type IEngine interface {

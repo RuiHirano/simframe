@@ -1,4 +1,4 @@
-package github.com/RuiHirano/simframe/app/model
+package model
 
 import (
 	"fmt"

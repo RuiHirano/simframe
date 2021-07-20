@@ -1,4 +1,4 @@
-package github.com/RuiHirano/simframe/app/config
+package config
 
 type IConfig interface {
 }

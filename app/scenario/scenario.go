@@ -1,4 +1,4 @@
-package github.com/RuiHirano/simframe/app/scenario
+package scenario
 
 import (
 	"github.com/RuiHirano/simframe/app/model"
@@ -6,7 +6,7 @@ import (
 
 type IScenario interface {
 	Run()
-	Step()
+	Step(agents []model.IAgent)
 }
 
 type Scenario struct {

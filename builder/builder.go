@@ -2,12 +2,16 @@ package builder
 
 import (
 	"bufio"
+	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"os"
 	"os/exec"
 	"path"
 	"runtime"
 	"time"
+
+	"github.com/RuiHirano/simframe/util"
 
 	"github.com/briandowns/spinner"
 	"github.com/fatih/color"
@@ -50,7 +54,7 @@ func NewBuilder(id string) *Builder {
 func (bd *Builder) BuildDockerImage(){
 	color.Green("Building docker image...\n")
 	s := spinner.New(spinner.CharSets[9], 100*time.Millisecond)
-	cmd := exec.Command(builderDirPath+"/docker_build.sh", "sample", "1.0.0", builderDirPath)
+	cmd := exec.Command(builderDirPath+"/docker_build.sh", "sample", "1.0.0", currentDirPath)
 	stdout, err := cmd.StdoutPipe()
 
 	if err != nil {
@@ -90,13 +94,14 @@ func (bd *Builder) CreateBuildDirectory(){
 func (bd *Builder) GetApp(){
 	raw, err := ioutil.ReadFile(fmt.Sprintf("%s/simframe.config.json", currentDirPath))
 	if err != nil{
+		color.Red("cannot find simframe.config.json\n")
 		os.Exit(1)
 	}
 	var sc *util.SimFrameConfig
 	json.Unmarshal(raw, sc)
 
-	entry := sc.Entry
-	fmt.Printf(entry)
+	//entry := sc.Entry
+	//fmt.Printf(entry)
 }
 
 

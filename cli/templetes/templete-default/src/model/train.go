@@ -2,9 +2,10 @@ package train
 
 import (
 	"fmt"
+
 	"github.com/RuiHirano/simframe/util"
 
-	"github.com/RuiHirano/simframe/model"
+	"github.com/RuiHirano/simframe/app/model"
 )
 
 type Train struct {

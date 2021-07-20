@@ -1,22 +1,18 @@
-package main
+package myapp
 
 import (
-	"github.com/RuiHirano/simframe/app"
+	myscenario "scenario"
+
 	"github.com/RuiHirano/simframe/app/config"
-	"github.com/RuiHirano/simframe/scenario"
-	myscenario "github.com/RuiHirano/simframe/src/scenario"
+	"github.com/RuiHirano/simframe/app/scenario"
 )
 
-type App struct{
-	app.App
-}
-
-func (ap *App) Scenarios() []scenario.IScenario{
+func Scenarios() []scenario.IScenario{
 	sn := myscenario.NewScenario1()
 	return []scenario.IScenario{sn}
 }
 
-func (ap *App) Config() config.IConfig{
+func Config() config.IConfig{
 	config := config.NewConfig(&config.ConfigParams{
 		ServerNum: 1,
 	})

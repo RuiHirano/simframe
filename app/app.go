@@ -6,8 +6,8 @@ import (
 )
 
 type IApp interface {
-	Scenarios() []scenario.IScenario
-	Config() config.IConfig
+	GetConfig() config.IConfig
+	GetScenarios() []scenario.IScenario
 }
 
 type App struct {
@@ -23,4 +23,12 @@ func NewApp(scenarios []scenario.IScenario, conf config.IConfig) *App {
 	}
 
 	return app
+}
+
+func (app *App) GetConfig() config.IConfig{
+	return app.Config
+}
+
+func (app *App) GetScenarios() []scenario.IScenario{
+	return app.Scenarios
 }

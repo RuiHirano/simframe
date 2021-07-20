@@ -129,13 +129,13 @@ func (bd *Generator) CreateData(option Option) []Resource {
 		bd.NewMasterService(),
 		bd.NewMaster(),
 	}
-	areas := bd.AreaDivider(option.AreaCoords, option.DevideSquareNum, option.DuplicateRate)
+	/*areas := bd.AreaDivider(option.AreaCoords, option.DevideSquareNum, option.DuplicateRate)
 	//fmt.Printf("areas: %v\n", areas)
 
 	for _, area := range areas {
 		rsrcs = append(rsrcs, bd.NewWorkerService(area))
 		rsrcs = append(rsrcs, bd.NewWorker(area))
-	}
+	}*/
 
 	return rsrcs
 }

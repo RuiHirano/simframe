@@ -4,21 +4,19 @@ import (
 	"fmt"
 
 	ap "github.com/RuiHirano/simframe/app"
-	"github.com/RuiHirano/simframe/builder"
-	"github.com/RuiHirano/simframe/engine/pads/master"
-	"github.com/RuiHirano/simframe/engine/pads/worker"
+	"github.com/RuiHirano/simframe/pads/master"
+	"github.com/RuiHirano/simframe/pads/worker"
 )
 
 type IEngine interface {
-	Build()
 	RunPads()
 }
 
 type Engine struct {
-	App ap.App
+	App ap.IApp
 }
 
-func NewEngine(app ap.App) *Engine {
+func NewEngine(app ap.IApp) *Engine {
 
 	engine := &Engine{
 		App: app,
@@ -27,8 +25,8 @@ func NewEngine(app ap.App) *Engine {
 	return engine
 }
 
-func (engine *Engine) RunPads() {
-	runType := "WORKER"
+func (engine *Engine) RunPads(runType string) {
+	//unType := "WORKER"
 	if runType == "MASTER"{
 		master := master.NewMaster()
 		master.Serve()
@@ -39,13 +37,6 @@ func (engine *Engine) RunPads() {
 		worker.Run()
 	}
 }
-
-func (engine *Engine) Build() {
-	fmt.Printf("build")
-	bd := builder.Builder
-	bd.Build(engine.App)
-}
-
 
 func main(){
 	fmt.Printf("main")

@@ -5,7 +5,7 @@ import (
 
 	"github.com/RuiHirano/simframe/util"
 
-	"github.com/RuiHirano/simframe/model"
+	"github.com/RuiHirano/simframe/app/model"
 )
 
 type Car struct {
