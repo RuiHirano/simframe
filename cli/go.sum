@@ -39,6 +39,7 @@ cloud.google.com/go/storage v1.10.0/go.mod h1:FLPqc6j+Ki4BU591ie1oL6qBQGu2Bl/tZ9
 dmitri.shuralyov.com/gpu/mtl v0.0.0-20190408044501-666a987793e9/go.mod h1:H6x//7gZCb22OMCxBHrMx7a5I7Hp++hsVxbQ4BYO7hU=
 github.com/BurntSushi/toml v0.3.1/go.mod h1:xHWCNGjB5oqiDr8zfno3MHue2Ht5sIBksp03qcyfWMU=
 github.com/BurntSushi/xgb v0.0.0-20160522181843-27f122750802/go.mod h1:IVnqGOEym/WlBOVXweHU+Q+/VP0lqqI8lqeDx9IjBqo=
+github.com/RuiHirano/simframe v0.0.1 h1:xe4qlzakGc8jIgTOvqnSOVRQbe24Mbx8mu6QBbQr00Y=
 github.com/RuiHirano/simframe v1.0.1-beta h1:E7S9BTZh70DdEyN6WQLRCxYxRJCiWWYjHhuo1inexAg=
 github.com/RuiHirano/simframe/app v0.0.0-20210719111851-b4da8dce121e h1:r/qBD9KOOAQcXZnCREYSgojO11zG9XJD4e39UNb1KDU=
 github.com/RuiHirano/simframe/app v0.0.0-20210719111851-b4da8dce121e/go.mod h1:M7gSHFQu7Pfjloknf3kPiYHvRBHqnKV1hEx7EMfhlGc=
@@ -50,6 +51,8 @@ github.com/RuiHirano/simframe/app/scenario v0.0.0-20210719111851-b4da8dce121e h1
 github.com/RuiHirano/simframe/app/scenario v0.0.0-20210719111851-b4da8dce121e/go.mod h1:KRpokW9sUT5Kz0bi4WuqzW7CCP/OMYvTz/0Sw24EcEY=
 github.com/RuiHirano/simframe/builder v0.0.0-20210719111851-b4da8dce121e h1:/FjN3CROEv+gPzIt9BNgaT2tJWppaelqvtnAIpwHV7w=
 github.com/RuiHirano/simframe/builder v0.0.0-20210719111851-b4da8dce121e/go.mod h1:4eOAVgjXPZjDS14SVRTwUtWqm0/QmiMSmpnuDJHob3U=
+github.com/RuiHirano/simframe/builder v0.0.0-20210720100252-33c11f9006dc h1:QVVksX2MYrBPXzxdbFlICTQaahoRi80bfY/MB/4Rjt8=
+github.com/RuiHirano/simframe/builder v0.0.0-20210720100252-33c11f9006dc/go.mod h1:4qd04he1TXbunOY+GKL2/YeVNtGpR/a3L7R3ZwlEyKs=
 github.com/RuiHirano/simframe/util v0.0.0-20210719111851-b4da8dce121e h1:ocmalvFOFljxXPZ4UrV2Jnh0cvXVAaVFEE4F7Z2z4vs=
 github.com/RuiHirano/simframe/util v0.0.0-20210719111851-b4da8dce121e/go.mod h1:UgRxgO3wP52+uIvQPb504o+U5fSc83J3aNdwlspU+Fc=
 github.com/antihax/optional v1.0.0/go.mod h1:uupD/76wgC+ih3iEmQUL+0Ugr19nfwCT1kdvxnR2qWY=

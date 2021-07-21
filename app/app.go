@@ -1,8 +1,8 @@
 package app
 
 import (
-	"github.com/RuiHirano/simframe/app/scenario"
 	"github.com/RuiHirano/simframe/app/config"
+	"github.com/RuiHirano/simframe/app/scenario"
 )
 
 type IApp interface {

@@ -56,6 +56,7 @@ func (bd *Builder) BuildDockerImage(){
 	s := spinner.New(spinner.CharSets[9], 100*time.Millisecond)
 	cmd := exec.Command(builderDirPath+"/docker_build.sh", "sample", "1.0.0", currentDirPath)
 	stdout, err := cmd.StdoutPipe()
+	color.Green("Command: %v\n", cmd.String())
 
 	if err != nil {
 		color.Red("Error: %v\n", err)
