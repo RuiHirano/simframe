@@ -54,7 +54,8 @@ func NewBuilder(id string) *Builder {
 func (bd *Builder) BuildDockerImage(){
 	color.Green("Building docker image...\n")
 	s := spinner.New(spinner.CharSets[9], 100*time.Millisecond)
-	cmd := exec.Command(builderDirPath+"/docker_build.sh", "sample", "1.0.0", currentDirPath)
+	//cmd := exec.Command(builderDirPath+"/docker_build.sh", "sample", "1.0.0", currentDirPath)
+	cmd := exec.Command(fmt.Sprintf("docker build -t simframe/%s:%s %s"), "sample", "1.0.0", currentDirPath)
 	stdout, err := cmd.StdoutPipe()
 	color.Green("Command: %v\n", cmd.String())
 
