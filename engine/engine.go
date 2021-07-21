@@ -4,8 +4,8 @@ import (
 	"fmt"
 
 	ap "github.com/RuiHirano/simframe/app"
-	"github.com/RuiHirano/simframe/pads/master"
-	"github.com/RuiHirano/simframe/pads/worker"
+	"github.com/RuiHirano/simframe/engine/master"
+	"github.com/RuiHirano/simframe/engine/worker"
 )
 
 type IEngine interface {

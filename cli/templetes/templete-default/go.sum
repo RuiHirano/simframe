@@ -16,12 +16,15 @@ github.com/RuiHirano/simframe/app/scenario v0.0.0-20210720100252-33c11f9006dc h1
 github.com/RuiHirano/simframe/app/scenario v0.0.0-20210720100252-33c11f9006dc/go.mod h1:xu8weGi5urz4JFR72R9faOZ4Sq5fi1A+Vl0aMuRtQYg=
 github.com/RuiHirano/simframe/engine v0.0.0-20210720100252-33c11f9006dc h1:ice9/eG4NTKkP7nc7GeWXQBtJAbULAkDFsf7rW5ZCXA=
 github.com/RuiHirano/simframe/engine v0.0.0-20210720100252-33c11f9006dc/go.mod h1:RQN5K6Y81Xw/9ZlTCpEUEI9jzruV4CswoLef6/QJrP4=
+github.com/RuiHirano/simframe/pads v0.0.0-20210720100252-33c11f9006dc h1:XG3+xtP0f9smbwUOeWkms3qWZlr5yoxFd5Cm+RQeGvQ=
 github.com/RuiHirano/simframe/pads/master v0.0.0-20210720100252-33c11f9006dc h1:ERB8oyyicNyNblbOkpzts4e3Hse3EG4o+FKwoQmYKZM=
 github.com/RuiHirano/simframe/pads/master v0.0.0-20210720100252-33c11f9006dc/go.mod h1:v5WaghvpIfIKEyf4JeZkcZktFSO06xMzsJRr9f8AhR4=
 github.com/RuiHirano/simframe/pads/proto v0.0.0-20210720100252-33c11f9006dc h1:8+P0e9wtNEIAP7KVukXHLtLTkZfAXcjtXfCsRWkXaZ8=
 github.com/RuiHirano/simframe/pads/proto v0.0.0-20210720100252-33c11f9006dc/go.mod h1:Mo97tW4eMz2ONbKYnQad1erWvTc6m/OOh3q9jrC2Lz4=
 github.com/RuiHirano/simframe/pads/worker v0.0.0-20210720100252-33c11f9006dc h1:KiVOUL2vskJMlraKcgTT+YOCpMZCqXi/DW5ccm6iEJE=
 github.com/RuiHirano/simframe/pads/worker v0.0.0-20210720100252-33c11f9006dc/go.mod h1:JXyUc9fZ6pFFTL1ywyfD8nKa5yWabwF2IrzSvo45o1w=
+github.com/RuiHirano/simframe/pads/worker v0.0.0-20210721041131-f9025356f0f2 h1:/koquvScc6kZ+y58+daezYAKma0x+Zb7UlWarBtPlI4=
+github.com/RuiHirano/simframe/pads/worker v0.0.0-20210721041131-f9025356f0f2/go.mod h1:JXyUc9fZ6pFFTL1ywyfD8nKa5yWabwF2IrzSvo45o1w=
 github.com/RuiHirano/simframe/util v0.0.0-20210720100252-33c11f9006dc h1:vtlbFJzPH5WClzfz11hA3ZV6pgq+aa0NAUXfcSUZsLY=
 github.com/RuiHirano/simframe/util v0.0.0-20210720100252-33c11f9006dc/go.mod h1:UgRxgO3wP52+uIvQPb504o+U5fSc83J3aNdwlspU+Fc=
 github.com/antihax/optional v1.0.0/go.mod h1:uupD/76wgC+ih3iEmQUL+0Ugr19nfwCT1kdvxnR2qWY=
