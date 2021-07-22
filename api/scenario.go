@@ -1,5 +1,12 @@
 package api
 
+
+type IScenario interface {
+	GetGrpcScenario() *Scenario
+	Run()
+	Step(nbAgents []*Agent)
+}
+
 func NewScenario(agents []*Agent) *Scenario {
 	scenario := &Scenario{
 		Id: "0",
@@ -29,4 +36,8 @@ func (scenario *Scenario) Step(nbAgents []*Agent) {
 	}
 	scenario.Clock.Forward()
 	scenario.Clock.GetTimestamp()
+}
+
+func (sn *Scenario) GetGrpcScenario() *Scenario{
+	return sn
 }

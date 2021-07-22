@@ -1,9 +1,10 @@
 package api
 
-func NewApp(scenarios []*Scenario, conf *Config) *App {
+
+func NewApp(sns []*Scenario, conf *Config) *App {
 
 	app := &App{
-		Scenarios: scenarios,
+		Scenarios: sns,
 		Config: conf,
 	}
 
