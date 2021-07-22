@@ -2,6 +2,8 @@ package scenario
 
 import (
 	"github.com/RuiHirano/simframe/app/model"
+
+	"github.com/RuiHirano/simframe/api"
 )
 
 type IScenario interface {
@@ -10,19 +12,18 @@ type IScenario interface {
 }
 
 type Scenario struct {
-	ID string
-	Agents []model.IAgent
-	Clock IClock
-	Area IArea
+	*api.Scenario
 }
 
 func NewScenario(agents []model.IAgent, area IArea, clock IClock) *Scenario {
 
 	scenario := &Scenario{
-		ID: "0",
-		Agents: agents,
-		Clock: clock,
-		Area: area,
+		&api.Sceanrio{
+			ID: "0",
+			Agents: agents,
+			Clock: clock,
+			Area: area,
+		},
 	}
 
 	return scenario

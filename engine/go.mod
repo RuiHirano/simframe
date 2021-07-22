@@ -5,7 +5,7 @@ go 1.13
 replace (
 	github.com/RuiHirano/simframe/app => ../app
 	github.com/RuiHirano/simframe/builder => ../builder
-	github.com/RuiHirano/simframe/engine/api => ../engine/proto
+	github.com/RuiHirano/simframe/api => ../api
 	github.com/RuiHirano/simframe/engine/master => ../engine/master
 	github.com/RuiHirano/simframe/engine/worker => ../engine/worker
 )

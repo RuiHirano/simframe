@@ -8,4 +8,5 @@ go 1.13
 replace (
     github.com/RuiHirano/simframe/app/scenario => ./scenario
     github.com/RuiHirano/simframe/app/config => ./config
+	github.com/RuiHirano/simframe/api => ../../api
 )

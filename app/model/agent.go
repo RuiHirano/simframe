@@ -3,7 +3,7 @@ package model
 import (
 	"fmt"
 
-	"github.com/RuiHirano/simframe/util"
+	"github.com/RuiHirano/simframe/api"
 )
 
 type IAgent interface {
@@ -12,15 +12,16 @@ type IAgent interface {
 }
 
 type Agent struct {
-	ID string
-	Position *util.Position
+	*api.Agent
 }
 
-func NewAgent(id string, position *util.Position) *Agent {
+func NewAgent(id string, position *api.Position) *Agent {
 
 	agent := &Agent{
-		ID: id,
-		Position: position,
+		&api.Agent{
+			ID: id,
+			Position: position,
+		},
 	}
 
 	return agent

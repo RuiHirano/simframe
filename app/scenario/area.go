@@ -2,6 +2,8 @@ package scenario
 
 import (
 	"fmt"
+
+	"github.com/RuiHirano/simframe/api"
 )
 
 type IArea interface {
@@ -16,13 +18,15 @@ type Space struct{
 }
 
 type Area struct {
-	Space *Space
+	*api.Area
 }
 
 func NewArea() *Area {
 
 	area := &Area{
-		Space: &Space{MinX: 0, MaxX:10, MinY:0, MaxY:10},
+		&api.Area{
+			Space: &Space{MinX: 0, MaxX:10, MinY:0, MaxY:10},
+		},
 	}
 
 	return area

@@ -1,10 +1,14 @@
 package config
 
+import (
+	"github.com/RuiHirano/simframe/api"
+)
+
 type IConfig interface {
 }
 
 type Config struct {
-	ServerNum int64
+	*api.Config
 }
 
 type ConfigParams struct {
@@ -14,7 +18,9 @@ type ConfigParams struct {
 func NewConfig(param *ConfigParams) *Config {
 
 	config := &Config{
-		ServerNum: param.ServerNum,
+		&api.Config{
+			ServerNum: param.ServerNum,
+		},
 	}
 
 	return config

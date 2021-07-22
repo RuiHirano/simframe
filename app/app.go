@@ -1,6 +1,7 @@
 package app
 
 import (
+	"github.com/RuiHirano/simframe/api"
 	"github.com/RuiHirano/simframe/app/config"
 	"github.com/RuiHirano/simframe/app/scenario"
 )
@@ -11,15 +12,16 @@ type IApp interface {
 }
 
 type App struct {
-	Scenarios []scenario.IScenario
-	Config config.IConfig
+	*api.App
 }
 
 func NewApp(scenarios []scenario.IScenario, conf config.IConfig) *App {
 
 	app := &App{
-		Scenarios: scenarios,
-		Config: conf,
+		&api.App{
+			Scenarios: scenarios,
+			Config: conf,
+		},
 	}
 
 	return app

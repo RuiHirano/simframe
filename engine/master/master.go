@@ -6,8 +6,8 @@ import (
 	"log"
 	"net"
 
-	api "github.com/RuiHirano/simframe/pads/proto"
-	"github.com/RuiHirano/simframe/pads/worker"
+	"github.com/RuiHirano/simframe/api"
+	"github.com/RuiHirano/simframe/engine/worker"
 
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"

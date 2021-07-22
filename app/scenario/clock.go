@@ -2,6 +2,8 @@ package scenario
 
 import (
 	"fmt"
+
+	"github.com/RuiHirano/simframe/api"
 )
 
 type IClock interface {
@@ -11,13 +13,15 @@ type IClock interface {
 }
 
 type Clock struct {
-	Timestamp int
+	*api.Clock
 }
 
 func NewClock() *Clock {
 
 	clock := &Clock{
-		Timestamp: 0,
+		&api.Clock{
+			Timestamp: 0,
+		},
 	}
 
 	return clock

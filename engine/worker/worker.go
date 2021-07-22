@@ -6,7 +6,7 @@ import (
 	"log"
 	"net"
 
-	api "github.com/RuiHirano/simframe/pads/proto"
+	"github.com/RuiHirano/simframe/api"
 
 	"github.com/RuiHirano/simframe/app/model"
 	"github.com/RuiHirano/simframe/app/scenario"
