@@ -12,7 +12,20 @@ import (
 	"github.com/RuiHirano/simframe/engine"
 )
 
+type App2 struct{
+	*app.App
+}
 
+func NewApp2() *App2{
+	a := &App2{
+
+	}
+	return a
+}
+
+func (a *App2) Test(){
+
+}
 
 // TODO: Hide here from user
 func main() {

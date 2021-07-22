@@ -1,15 +1,22 @@
 package engine
 
 import (
+	"context"
 	"fmt"
+	"log"
+	"net"
 
 	ap "github.com/RuiHirano/simframe/app"
+	"github.com/RuiHirano/simframe/engine/api"
 	"github.com/RuiHirano/simframe/engine/master"
 	"github.com/RuiHirano/simframe/engine/worker"
+
+	"google.golang.org/grpc"
+	"google.golang.org/grpc/reflection"
 )
 
 type IEngine interface {
-	RunPads()
+	Run(runType string)
 }
 
 type Engine struct {
@@ -25,20 +32,68 @@ func NewEngine(app ap.IApp) *Engine {
 	return engine
 }
 
-func (engine *Engine) RunPads(runType string) {
+func (engine *Engine) Run(runType string) {
 	//unType := "WORKER"
-	if runType == "MASTER"{
+	switch runType {
+	case "ENGINE":
+		engine.Serve()
+		// calc use resources
+
+		// create resources
+
+		// apply resources
+	case "MASTER":
 		master := master.NewMaster()
 		master.Serve()
 		master.Run()
-	}else if runType == "WORKER"{
+	case "WORKER":
 		worker := worker.NewWorker()
 		worker.Serve()
-		worker.Run()
+		worker.Run()	
 	}
 }
 
-func main(){
-	fmt.Printf("main")
-	
+
+func (engine *Engine) Serve() {
+	fmt.Printf("Serve Engine\n")
+
+	server := grpc.NewServer()
+	svc := NewEngineService(engine)
+	// 実行したい実処理をseverに登録する
+	api.RegisterEngineServiceServer(server, svc)
+
+	reflection.Register(server)
+	lis, err := net.Listen("tcp", ":10000")
+	defer lis.Close()
+	if err != nil {
+		log.Fatalf("failed to listen: %v", err)
+	}
+
+	fmt.Printf("Serving! port is 10000\n")
+	server.Serve(lis)
+}
+
+
+type EngineService struct{
+	engine IEngine
+	api.UnimplementedEngineServiceServer
+}
+
+func NewEngineService(engine IEngine) *EngineService{
+   ms := &EngineService{
+	   engine: engine,
+   }
+   return ms
+}
+
+func (es *EngineService) GetStatus(ctx context.Context, request *api.GetStatusRequest) (*api.GetStatusResponse, error) {
+   fmt.Printf("getRequest %v\n", request)
+
+   response := &api.GetStatusResponse{
+	   Status: &api.SimulationStatus{
+		Config: &api.Config{},
+		Scenarios: []*api.Scenario{},
+	   },
+   }
+   return response, nil
 }

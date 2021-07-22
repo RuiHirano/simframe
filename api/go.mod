@@ -1,4 +1,4 @@
-module github.com/RuiHirano/simframe/engine/proto
+module github.com/RuiHirano/simframe/api
 
 go 1.13
 

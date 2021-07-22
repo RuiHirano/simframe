@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package scenario;
+
+option go_package="./scenario";
+
+
+message Agent {
+	uint64 id = 1;
+	Position position = 2;
+}
+
+message Position {
+	float x = 1;
+	float y = 2;
+}

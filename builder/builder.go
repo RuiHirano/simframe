@@ -40,6 +40,7 @@ type IBuilder interface {
 
 type Builder struct {
 	ID string
+	SimFrameConfig *util.SimFrameConfig
 }
 
 func NewBuilder(id string) *Builder {
@@ -48,6 +49,7 @@ func NewBuilder(id string) *Builder {
 		ID: id,
 	}
 
+	builder.SetConfig()
 	return builder
 }
 
@@ -55,7 +57,7 @@ func (bd *Builder) BuildDockerImage(){
 	color.Green("Building docker image...\n")
 	s := spinner.New(spinner.CharSets[9], 100*time.Millisecond)
 	//cmd := exec.Command(builderDirPath+"/docker_build.sh", "sample", "1.0.0", currentDirPath)
-	cmd := exec.Command(fmt.Sprintf("docker build -t simframe/%s:%s %s", "sample", "1.0.0", currentDirPath))
+	cmd := exec.Command(fmt.Sprintf("docker build -t simframe/%s:%s %s", bd.SimFrameConfig.Name, bd.SimFrameConfig.Version, currentDirPath))
 	stdout, err := cmd.StdoutPipe()
 	color.Green("Command: %v\n", cmd.String())
 
@@ -81,7 +83,7 @@ func (bd *Builder) GenerateK8sResource(){
 	color.Green("Generating kubernetes resource file...\n")
 	s := spinner.New(spinner.CharSets[9], 100*time.Millisecond)
 	s.Start() 
-	gen := NewGenerator("id")
+	gen := NewGenerator("id", bd.SimFrameConfig)
 	gen.GenerateResource()
 	s.Stop()
 }
@@ -93,7 +95,7 @@ func (bd *Builder) CreateBuildDirectory(){
     }
 }
 
-func (bd *Builder) GetApp(){
+func (bd *Builder) SetConfig(){
 	raw, err := ioutil.ReadFile(fmt.Sprintf("%s/simframe.config.json", currentDirPath))
 	if err != nil{
 		color.Red("cannot find simframe.config.json\n")
@@ -101,14 +103,14 @@ func (bd *Builder) GetApp(){
 	}
 	var sc *util.SimFrameConfig
 	json.Unmarshal(raw, sc)
-
-	//entry := sc.Entry
-	//fmt.Printf(entry)
+	if sc == nil | sc.Name == "" | sc.Version == ""{
+		color.Red("invalid args in simframe.config.json\n")
+		os.Exit(1)
+	}
+	bd.SimFrameConfig = sc
 }
 
-
 func (bd *Builder) Build(){
-	bd.GetApp()
 	bd.CreateBuildDirectory()
 	bd.BuildDockerImage()
 	bd.GenerateK8sResource()

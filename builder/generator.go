@@ -32,6 +32,7 @@ type Container struct {
 	Tty             bool   `yaml:"tty,omitempty"`
 	Env             []Env  `yaml:"env,omitempty"`
 	Ports           []Port `yaml:"ports,omitempty"`
+	Command         []string `yaml:"command,omitempty"`
 }
 
 type Env struct {
@@ -86,12 +87,14 @@ type IGenerator interface {
 
 type Generator struct {
 	ID string
+	SimFrameConfig *util.SimFrameConfig
 }
 
-func NewGenerator(id string) *Generator {
+func NewGenerator(id string, sfc *util.SimFrameConfig) *Generator {
 
 	generator := &Generator{
 		ID: id,
+		SimFrameConfig: sfc,
 	}
 
 	return generator
@@ -281,23 +284,6 @@ func (bd *Generator) NewMasterService() Resource {
 		Metadata:   Metadata{Name: "master"},
 		Spec: Spec{
 			Selector: Selector{App: "master"},
-			Ports: []Port{
-				{
-					Name:       "synerex",
-					Port:       10000,
-					TargetPort: 10000,
-				},
-				{
-					Name:       "nodeid",
-					Port:       9000,
-					TargetPort: 9000,
-				},
-				{
-					Name:       "master-provider",
-					Port:       9900,
-					TargetPort: 9900,
-				},
-			},
 		},
 	}
 	return service
@@ -320,6 +306,51 @@ func (bd *Generator) NewMaster() Resource {
 					Env: []Env{
 					},
 					Ports: []Port{{ContainerPort: 9000}},
+				},
+			},
+		},
+	}
+	return master
+}
+
+// engine
+func (bd *Generator) NewEngineService() Resource {
+	service := Resource{
+		ApiVersion: "v1",
+		Kind:       "Service",
+		Metadata:   Metadata{Name: "engine"},
+		Spec: Spec{
+			Selector: Selector{App: "engine"},
+			Ports: []Port{
+				{
+					Name:       "engine",
+					Port:       10000,
+					TargetPort: 10000,
+				},
+			},
+		},
+	}
+	return service
+}
+
+func (bd *Generator) NewEngine() Resource {
+	master := Resource{
+		ApiVersion: "v1",
+		Kind:       "Pod",
+		Metadata: Metadata{
+			Name:   "engine",
+			Labels: Label{App: "engine"},
+		},
+		Spec: Spec{
+			Containers: []Container{
+				{
+					Name:            "simframe-engine",
+					Image:           fmt.Sprintf("simframe/%s:%s", bd.SimFrameConfig.Name, bd.SimFrameConfig.Version),
+					ImagePullPolicy: "Never",
+					Env: []Env{
+					},
+					Ports: []Port{{ContainerPort: 10000}},
+					Command: []string{"./build/simframe-engine", "run", "master"}
 				},
 			},
 		},

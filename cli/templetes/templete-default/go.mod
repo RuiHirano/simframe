@@ -1,4 +1,4 @@
-module simframe-engine
+module main
 
 go 1.13
 
@@ -15,6 +15,9 @@ require (
 	github.com/RuiHirano/simframe/app/model v0.0.0-20210720100252-33c11f9006dc // indirect
 	github.com/RuiHirano/simframe/app/scenario v0.0.0-20210720100252-33c11f9006dc // indirect
 	github.com/RuiHirano/simframe/engine v0.0.0-20210720100252-33c11f9006dc
+	github.com/RuiHirano/simframe/pads/master v0.0.0-20210720100252-33c11f9006dc // indirect
+	github.com/RuiHirano/simframe/pads/proto v0.0.0-20210721041131-f9025356f0f2 // indirect
+	github.com/RuiHirano/simframe/pads/worker v0.0.0-20210721041131-f9025356f0f2 // indirect
 	github.com/RuiHirano/simframe/util v0.0.0-20210720100252-33c11f9006dc // indirect
 	github.com/fatih/color v1.12.0
 	google.golang.org/grpc v1.39.0 // indirect
