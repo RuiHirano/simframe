@@ -1,4 +1,4 @@
-package config
+package app
 
 import (
 	"github.com/RuiHirano/simframe/api"

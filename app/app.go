@@ -2,20 +2,18 @@ package app
 
 import (
 	"github.com/RuiHirano/simframe/api"
-	"github.com/RuiHirano/simframe/app/config"
-	"github.com/RuiHirano/simframe/app/scenario"
 )
 
 type IApp interface {
-	GetConfig() config.IConfig
-	GetScenarios() []scenario.IScenario
+	GetConfig() IConfig
+	GetScenarios() []IScenario
 }
 
 type App struct {
 	*api.App
 }
 
-func NewApp(scenarios []scenario.IScenario, conf config.IConfig) *App {
+func NewApp(scenarios []IScenario, conf IConfig) *App {
 
 	app := &App{
 		&api.App{
@@ -27,10 +25,10 @@ func NewApp(scenarios []scenario.IScenario, conf config.IConfig) *App {
 	return app
 }
 
-func (app *App) GetConfig() config.IConfig{
+func (app *App) GetConfig() IConfig{
 	return app.Config
 }
 
-func (app *App) GetScenarios() []scenario.IScenario{
+func (app *App) GetScenarios() []IScenario{
 	return app.Scenarios
 }
