@@ -43,12 +43,12 @@ message GetAgentsResponse{
 
 
 message Master {
-    uint64 id = 1;
+    string id = 1;
 	string server_address = 2;
 }
 
 message Worker {
-    uint64 id = 1;
+    string id = 1;
 	string server_address = 2;
     repeated Worker neighbor_workers = 3;
 }
@@ -77,13 +77,13 @@ message GetStatusResponse{
 
 
 message App {
-	uint64 id = 1;
+	string id = 1;
 	Config config = 2;
 	repeated Scenario scenarios = 3;
 }
 
 message Scenario {
-	uint64 id = 1;
+	string id = 1;
 	uint64 name = 2;
 	repeated Agent agents = 3;
 	Clock clock = 4;
@@ -95,7 +95,7 @@ message Config {
 }
 
 message Agent {
-	uint64 id = 1;
+	string id = 1;
 	Position position = 2;
 }
 
