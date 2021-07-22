@@ -45,6 +45,7 @@ message GetAgentsResponse{
 message Master {
     string id = 1;
 	string server_address = 2;
+    repeated Worker registered_workers = 3;
 }
 
 message Worker {
@@ -65,6 +66,11 @@ enum StatusType {
 
 service EngineService {
     rpc GetStatus(GetStatusRequest) returns (GetStatusResponse){}
+}
+
+message Engine {
+    string id = 1;
+    App app = 2;
 }
 
 message GetStatusRequest{
