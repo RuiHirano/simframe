@@ -12,7 +12,7 @@ type Scenario struct {
 	Agents []IAgent
 }
 
-func NewScenario(agents []IAgent, area IArea, clock IClock) IScenario {
+func NewScenario(agents []IAgent, area IArea, clock IClock) *Scenario {
 
 	scenario := &Scenario{
 		Area: area,
