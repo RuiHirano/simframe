@@ -11,8 +11,6 @@ import (
 	"runtime"
 	"time"
 
-	"github.com/RuiHirano/simframe/util"
-
 	"github.com/briandowns/spinner"
 	"github.com/fatih/color"
 )
@@ -21,6 +19,11 @@ var (
     builderDirPath string
     currentDirPath string
 )
+
+type SimframeConfig struct{
+	Name string
+	Version string
+}
 
 func init(){
     _, filename, _, ok := runtime.Caller(0)
@@ -40,7 +43,7 @@ type IBuilder interface {
 
 type Builder struct {
 	ID string
-	SimFrameConfig *util.SimFrameConfig
+	SimframeConfig *SimframeConfig
 }
 
 func NewBuilder(id string) *Builder {
@@ -57,7 +60,7 @@ func (bd *Builder) BuildDockerImage(){
 	color.Green("Building docker image...\n")
 	s := spinner.New(spinner.CharSets[9], 100*time.Millisecond)
 	//cmd := exec.Command(builderDirPath+"/docker_build.sh", "sample", "1.0.0", currentDirPath)
-	cmd := exec.Command(fmt.Sprintf("docker build -t simframe/%s:%s %s", bd.SimFrameConfig.Name, bd.SimFrameConfig.Version, currentDirPath))
+	cmd := exec.Command(fmt.Sprintf("docker build -t simframe/%s:%s %s", bd.SimframeConfig.Name, bd.SimframeConfig.Version, currentDirPath))
 	stdout, err := cmd.StdoutPipe()
 	color.Green("Command: %v\n", cmd.String())
 
@@ -83,7 +86,7 @@ func (bd *Builder) GenerateK8sResource(){
 	color.Green("Generating kubernetes resource file...\n")
 	s := spinner.New(spinner.CharSets[9], 100*time.Millisecond)
 	s.Start() 
-	gen := NewGenerator("id", bd.SimFrameConfig)
+	gen := NewGenerator("id", bd.SimframeConfig)
 	gen.GenerateResource()
 	s.Stop()
 }
@@ -101,13 +104,13 @@ func (bd *Builder) SetConfig(){
 		color.Red("cannot find simframe.config.json\n")
 		os.Exit(1)
 	}
-	var sc *util.SimFrameConfig
+	var sc *SimframeConfig
 	json.Unmarshal(raw, sc)
-	if sc == nil | sc.Name == "" | sc.Version == ""{
+	if sc == nil || sc.Name == "" || sc.Version == ""{
 		color.Red("invalid args in simframe.config.json\n")
 		os.Exit(1)
 	}
-	bd.SimFrameConfig = sc
+	bd.SimframeConfig = sc
 }
 
 func (bd *Builder) Build(){

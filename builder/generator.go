@@ -87,14 +87,14 @@ type IGenerator interface {
 
 type Generator struct {
 	ID string
-	SimFrameConfig *util.SimFrameConfig
+	SimframeConfig *SimframeConfig
 }
 
-func NewGenerator(id string, sfc *util.SimFrameConfig) *Generator {
+func NewGenerator(id string, sfc *SimframeConfig) *Generator {
 
 	generator := &Generator{
 		ID: id,
-		SimFrameConfig: sfc,
+		SimframeConfig: sfc,
 	}
 
 	return generator
@@ -129,8 +129,8 @@ func (bd *Generator) GenerateResource(){
 
 func (bd *Generator) CreateData(option Option) []Resource {
 	rsrcs := []Resource{
-		bd.NewMasterService(),
-		bd.NewMaster(),
+		bd.NewEngineService(),
+		bd.NewEngine(),
 	}
 	/*areas := bd.AreaDivider(option.AreaCoords, option.DevideSquareNum, option.DuplicateRate)
 	//fmt.Printf("areas: %v\n", areas)
@@ -230,88 +230,6 @@ func (bd *Generator) WriteOnFile(fileName string, data interface{}) error {
 	return nil
 }
 
-// worker
-func (bd *Generator) NewWorkerService(area Area) Resource {
-	name := "worker" + strconv.Itoa(area.Id)
-	service := Resource{
-		ApiVersion: "v1",
-		Kind:       "Service",
-		Metadata:   Metadata{Name: name},
-		Spec: Spec{
-			Selector: Selector{App: name},
-			Ports: []Port{
-				{
-					Name:       name,
-					Port:       10000,
-					TargetPort: 10000,
-				},
-			},
-		},
-	}
-	return service
-}
-
-func (bd *Generator) NewWorker(area Area) Resource {
-	workerName := "worker" + strconv.Itoa(area.Id)
-
-	worker := Resource{
-		ApiVersion: "v1",
-		Kind:       "Pod",
-		Metadata: Metadata{
-			Name:   workerName,
-			Labels: Label{App: workerName},
-		},
-		Spec: Spec{
-			Containers: []Container{
-				{
-					Name:            "simframe-simulator",
-					Image:           fmt.Sprintf("simframe/%s:%s", "sample","1.0.0"),
-					ImagePullPolicy: "Never",
-					Env: []Env{
-					},
-				},
-			},
-		},
-	}
-	return worker
-}
-
-// master
-func (bd *Generator) NewMasterService() Resource {
-	service := Resource{
-		ApiVersion: "v1",
-		Kind:       "Service",
-		Metadata:   Metadata{Name: "master"},
-		Spec: Spec{
-			Selector: Selector{App: "master"},
-		},
-	}
-	return service
-}
-
-func (bd *Generator) NewMaster() Resource {
-	master := Resource{
-		ApiVersion: "v1",
-		Kind:       "Pod",
-		Metadata: Metadata{
-			Name:   "master",
-			Labels: Label{App: "master"},
-		},
-		Spec: Spec{
-			Containers: []Container{
-				{
-					Name:            "simframe-simulator",
-					Image:           fmt.Sprintf("simframe/%s:%s", "sample","1.0.0"),
-					ImagePullPolicy: "Never",
-					Env: []Env{
-					},
-					Ports: []Port{{ContainerPort: 9000}},
-				},
-			},
-		},
-	}
-	return master
-}
 
 // engine
 func (bd *Generator) NewEngineService() Resource {
@@ -345,12 +263,12 @@ func (bd *Generator) NewEngine() Resource {
 			Containers: []Container{
 				{
 					Name:            "simframe-engine",
-					Image:           fmt.Sprintf("simframe/%s:%s", bd.SimFrameConfig.Name, bd.SimFrameConfig.Version),
+					Image:           fmt.Sprintf("simframe/%s:%s", bd.SimframeConfig.Name, bd.SimframeConfig.Version),
 					ImagePullPolicy: "Never",
 					Env: []Env{
 					},
 					Ports: []Port{{ContainerPort: 10000}},
-					Command: []string{"./build/simframe-engine", "run", "master"}
+					Command: []string{"./build/simframe-engine", "run", "engine"},
 				},
 			},
 		},
