@@ -4,7 +4,7 @@ import (
 )
 
 type IArea interface {
-	GetSpace()
+	GetSpace()*Space
 }
 
 type Area struct {

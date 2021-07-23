@@ -6,7 +6,7 @@ import (
 type IClock interface {
 	Forward()
 	Backward()
-	GetTimestamp()
+	GetTimestamp() uint64
 }
 
 type Clock struct {
