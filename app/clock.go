@@ -2,8 +2,6 @@ package app
 
 import (
 	"fmt"
-
-	"github.com/RuiHirano/simframe/api"
 )
 
 type IClock interface {
@@ -13,15 +11,13 @@ type IClock interface {
 }
 
 type Clock struct {
-	*api.Clock
+	Timestamp uint64
 }
 
 func NewClock() *Clock {
 
 	clock := &Clock{
-		&api.Clock{
-			Timestamp: 0,
-		},
+		Timestamp: 0,
 	}
 
 	return clock

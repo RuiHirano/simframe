@@ -2,8 +2,6 @@ package app
 
 import (
 	"fmt"
-
-	"github.com/RuiHirano/simframe/api"
 )
 
 type IAgent interface {
@@ -12,21 +10,22 @@ type IAgent interface {
 }
 
 type Agent struct {
-	*api.Agent
+	ID string
+	Name string
+	Position *Position
 }
 
-func NewAgent(id string, position *api.Position) *Agent {
+func NewAgent(id string, name string, position *Position) *Agent {
 
 	agent := &Agent{
-		&api.Agent{
-			Id: id,
-			Position: position,
-		},
+		ID: id,
+		Name: name,
+		Position: position,
 	}
 
 	return agent
 }
 
 func (agent *Agent) Status() {
-	fmt.Printf("Status %s %v\n", agent.Id, agent.Position)
+	fmt.Printf("Status %s %v\n", agent.ID, agent.Position)
 }
