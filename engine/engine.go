@@ -1,15 +1,12 @@
 package engine
 
 import (
-	"context"
 	"fmt"
 	"log"
 	"net"
 
 	"github.com/RuiHirano/simframe/api"
-	ap "github.com/RuiHirano/simframe/app"
-	"github.com/RuiHirano/simframe/engine/master"
-	"github.com/RuiHirano/simframe/engine/worker"
+	"github.com/RuiHirano/simframe/app"
 
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
@@ -20,13 +17,13 @@ type IEngine interface {
 }
 
 type Engine struct {
-	App ap.IApp
+	App app.IApp
 }
 
-func NewEngine(app ap.IApp) *Engine {
+func NewEngine(ap app.IApp) *Engine {
 
 	engine := &Engine{
-		App: app,
+		App: ap,
 	}
 
 	return engine
@@ -42,23 +39,19 @@ func (engine *Engine) Run(runType string) {
 		// create resources
 
 		// apply resources
-	case "MASTER":
-		master := master.NewMaster()
-		master.Serve()
-		master.Run()
-	case "WORKER":
-		worker := worker.NewWorker()
-		worker.Serve()
-		worker.Run()	
+	case "SIMULATOR":
+		sim := NewSimulator()
+		sim.Serve()
+		sim.Run()	
 	}
 }
 
 
-func (engine *Engine) Serve() {
+func (en *Engine) Serve() {
 	fmt.Printf("Serve Engine\n")
 
 	server := grpc.NewServer()
-	svc := NewEngineService(engine)
+	svc := NewEngineService(en.RegisterSimulatorHandler)
 	// 実行したい実処理をseverに登録する
 	api.RegisterEngineServiceServer(server, svc)
 
@@ -74,26 +67,7 @@ func (engine *Engine) Serve() {
 }
 
 
-type EngineService struct{
-	engine IEngine
-	api.UnimplementedEngineServiceServer
-}
-
-func NewEngineService(engine IEngine) *EngineService{
-   ms := &EngineService{
-	   engine: engine,
-   }
-   return ms
-}
-
-func (es *EngineService) GetStatus(ctx context.Context, request *api.GetStatusRequest) (*api.GetStatusResponse, error) {
-   fmt.Printf("getRequest %v\n", request)
-
-   response := &api.GetStatusResponse{
-	   Status: &api.SimulationStatus{
-		Config: &api.Config{},
-		Scenarios: []*api.Scenario{},
-	   },
-   }
-   return response, nil
+func (engine *Engine) RegisterSimulatorHandler() (app.IArea, app.IClock, []app.IAgent){
+	fmt.Printf("Register simulator\n")
+	return app.NewArea(), app.NewClock(), []app.IAgent{}
 }
