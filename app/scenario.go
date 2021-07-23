@@ -1,6 +1,9 @@
 package app
 
 type IScenario interface {
+	GetArea() IArea
+	GetClock() IClock
+	GetAgents() []IAgent
 }
 
 type Scenario struct {
@@ -18,4 +21,16 @@ func NewScenario(agents []IAgent, area IArea, clock IClock) IScenario {
 	}
 
 	return scenario
+}
+
+func (sn *Scenario) GetArea() IArea{
+	return sn.Area
+}
+
+func (sn *Scenario) GetClock() IClock{
+	return sn.Clock
+}
+
+func (sn *Scenario) GetAgents() []IAgent{
+	return sn.Agents
 }

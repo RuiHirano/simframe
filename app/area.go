@@ -1,14 +1,11 @@
 package app
 
 import (
-	"fmt"
 )
 
 type IArea interface {
 	GetSpace()
 }
-
-
 
 type Area struct {
 	Space *Space
@@ -23,6 +20,6 @@ func NewArea() *Area {
 	return area
 }
 
-func (area *Area) GetSpace(){
-	fmt.Printf("Space: %v ---------\n", area.Space)
+func (area *Area) GetSpace()*Space{
+	return area.Space
 }

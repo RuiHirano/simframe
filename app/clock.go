@@ -1,7 +1,6 @@
 package app
 
 import (
-	"fmt"
 )
 
 type IClock interface {
@@ -31,6 +30,6 @@ func (clock *Clock) Backward() {
 	clock.Timestamp -= 1
 }
 
-func (clock *Clock) GetTimestamp(){
-	fmt.Printf("Timestamp: %d ---------\n", clock.Timestamp)
+func (clock *Clock) GetTimestamp() uint64{
+	return clock.Timestamp
 }

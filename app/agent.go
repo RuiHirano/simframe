@@ -1,12 +1,13 @@
 package app
 
 import (
-	"fmt"
 )
 
 type IAgent interface {
-	Status()
 	Step()
+	GetID() string
+	GetName() string
+	GetPosition() *Position
 }
 
 type Agent struct {
@@ -26,6 +27,14 @@ func NewAgent(id string, name string, position *Position) *Agent {
 	return agent
 }
 
-func (agent *Agent) Status() {
-	fmt.Printf("Status %s %v\n", agent.ID, agent.Position)
+func (agent *Agent) GetID() string{
+	return agent.ID
+}
+
+func (agent *Agent) GetName() string{
+	return agent.Name
+}
+
+func (agent *Agent) GetPosition() *Position{
+	return agent.Position
 }
