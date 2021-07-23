@@ -4,105 +4,58 @@ package api;
 
 option go_package="./api";
 
-service MasterService {
-    rpc RegisterWorker(RegisterWorkerRequest) returns (RegisterWorkerResponse){}
-    rpc UpdateWorker(UpdateWorkerRequest) returns (UpdateWorkerResponse){}
+service SimulatorService {
+    rpc RunSimulator(RunSimulatorRequest) returns (RunSimulatorResponse){}
+    rpc GetNeighborAgents(GetNeighborAgentsRequest) returns (GetNeighborAgentsResponse){}
 }
 
-message RegisterWorkerRequest{
-    Worker worker = 1;
+message RunSimulatorRequest{
 }
 
-message RegisterWorkerResponse{
+message RunSimulatorResponse{
+    Status status = 1;
 }
 
-message UpdateWorkerRequest{
-    Worker worker = 1;
-}
-
-message UpdateWorkerResponse{
-}
-
-service WorkerService {
-    rpc RunWorker(RunWorkerRequest) returns (RunWorkerResponse){}
-    rpc GetAgents(GetAgentsRequest) returns (GetAgentsResponse){}
-}
-
-message RunWorkerRequest{
-}
-
-message RunWorkerResponse{
-}
-
-message GetAgentsRequest{
-}
-
-message GetAgentsResponse{
+message GetNeighborAgentsRequest{
     repeated Agent agents = 1;
 }
 
+message GetNeighborAgentsResponse{
+    repeated Agent agents = 1;
+    Status status = 2;
+}
 
-message Master {
+service EngineService {
+    rpc RegisterSimulator(RegisterSimulatorRequest) returns (RegisterSimulatorResponse){}
+}
+
+message RegisterSimulatorRequest{
+    Simulator simulator = 1;
+}
+
+message RegisterSimulatorResponse{
+    Status status = 1;
+    Area area = 2;
+    Clock clock = 3;
+	repeated Agent agents = 4;
+}
+
+message Simulator {
     string id = 1;
 	string server_address = 2;
-    repeated Worker registered_workers = 3;
-}
-
-message Worker {
-    string id = 1;
-	string server_address = 2;
-    repeated Worker neighbor_workers = 3;
+    repeated Simulator neighbors = 3;
 }
 
 
-message BasicResponse {
-    StatusType status = 1;
-}
-
-enum StatusType {
+enum Status {
     OK = 0;
     ERROR = 1;
 }
 
-service EngineService {
-    rpc GetStatus(GetStatusRequest) returns (GetStatusResponse){}
-}
-
-message Engine {
-    string id = 1;
-    App app = 2;
-}
-
-message GetStatusRequest{
-}
-
-message GetStatusResponse{
-    Config config = 1;
-    repeated Scenario scenarios = 2;
-}
-
-
-message App {
-	string id = 1;
-	Config config = 2;
-	repeated Scenario scenarios = 3;
-}
-
-message Scenario {
-	string id = 1;
-	uint64 name = 2;
-	repeated Agent agents = 3;
-	Clock clock = 4;
-	Area area = 6;
-}
-
-message Config {
-	uint64 server_num = 1;
-}
-
 message Agent {
 	string id = 1;
-	Position position = 2;
+	string name = 2;
+	Position position = 3;
 }
 
 message Area {
@@ -118,12 +71,6 @@ message Space {
 
 message Clock {
     uint64 timestamp = 1;
-}
-
-message SimFrameConfig {
-	string name = 1;
-	string version = 2;
-	string entry = 3;
 }
 
 message Position {

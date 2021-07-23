@@ -14,244 +14,122 @@ import (
 // Requires gRPC-Go v1.32.0 or later.
 const _ = grpc.SupportPackageIsVersion7
 
-// MasterServiceClient is the client API for MasterService service.
+// SimulatorServiceClient is the client API for SimulatorService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type MasterServiceClient interface {
-	RegisterWorker(ctx context.Context, in *RegisterWorkerRequest, opts ...grpc.CallOption) (*RegisterWorkerResponse, error)
-	UpdateWorker(ctx context.Context, in *UpdateWorkerRequest, opts ...grpc.CallOption) (*UpdateWorkerResponse, error)
+type SimulatorServiceClient interface {
+	RunSimulator(ctx context.Context, in *RunSimulatorRequest, opts ...grpc.CallOption) (*RunSimulatorResponse, error)
+	GetNeighborAgents(ctx context.Context, in *GetNeighborAgentsRequest, opts ...grpc.CallOption) (*GetNeighborAgentsResponse, error)
 }
 
-type masterServiceClient struct {
+type simulatorServiceClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewMasterServiceClient(cc grpc.ClientConnInterface) MasterServiceClient {
-	return &masterServiceClient{cc}
+func NewSimulatorServiceClient(cc grpc.ClientConnInterface) SimulatorServiceClient {
+	return &simulatorServiceClient{cc}
 }
 
-func (c *masterServiceClient) RegisterWorker(ctx context.Context, in *RegisterWorkerRequest, opts ...grpc.CallOption) (*RegisterWorkerResponse, error) {
-	out := new(RegisterWorkerResponse)
-	err := c.cc.Invoke(ctx, "/api.MasterService/RegisterWorker", in, out, opts...)
+func (c *simulatorServiceClient) RunSimulator(ctx context.Context, in *RunSimulatorRequest, opts ...grpc.CallOption) (*RunSimulatorResponse, error) {
+	out := new(RunSimulatorResponse)
+	err := c.cc.Invoke(ctx, "/api.SimulatorService/RunSimulator", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *masterServiceClient) UpdateWorker(ctx context.Context, in *UpdateWorkerRequest, opts ...grpc.CallOption) (*UpdateWorkerResponse, error) {
-	out := new(UpdateWorkerResponse)
-	err := c.cc.Invoke(ctx, "/api.MasterService/UpdateWorker", in, out, opts...)
+func (c *simulatorServiceClient) GetNeighborAgents(ctx context.Context, in *GetNeighborAgentsRequest, opts ...grpc.CallOption) (*GetNeighborAgentsResponse, error) {
+	out := new(GetNeighborAgentsResponse)
+	err := c.cc.Invoke(ctx, "/api.SimulatorService/GetNeighborAgents", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// MasterServiceServer is the server API for MasterService service.
-// All implementations must embed UnimplementedMasterServiceServer
+// SimulatorServiceServer is the server API for SimulatorService service.
+// All implementations must embed UnimplementedSimulatorServiceServer
 // for forward compatibility
-type MasterServiceServer interface {
-	RegisterWorker(context.Context, *RegisterWorkerRequest) (*RegisterWorkerResponse, error)
-	UpdateWorker(context.Context, *UpdateWorkerRequest) (*UpdateWorkerResponse, error)
-	mustEmbedUnimplementedMasterServiceServer()
+type SimulatorServiceServer interface {
+	RunSimulator(context.Context, *RunSimulatorRequest) (*RunSimulatorResponse, error)
+	GetNeighborAgents(context.Context, *GetNeighborAgentsRequest) (*GetNeighborAgentsResponse, error)
+	mustEmbedUnimplementedSimulatorServiceServer()
 }
 
-// UnimplementedMasterServiceServer must be embedded to have forward compatible implementations.
-type UnimplementedMasterServiceServer struct {
+// UnimplementedSimulatorServiceServer must be embedded to have forward compatible implementations.
+type UnimplementedSimulatorServiceServer struct {
 }
 
-func (UnimplementedMasterServiceServer) RegisterWorker(context.Context, *RegisterWorkerRequest) (*RegisterWorkerResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method RegisterWorker not implemented")
+func (UnimplementedSimulatorServiceServer) RunSimulator(context.Context, *RunSimulatorRequest) (*RunSimulatorResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RunSimulator not implemented")
 }
-func (UnimplementedMasterServiceServer) UpdateWorker(context.Context, *UpdateWorkerRequest) (*UpdateWorkerResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UpdateWorker not implemented")
+func (UnimplementedSimulatorServiceServer) GetNeighborAgents(context.Context, *GetNeighborAgentsRequest) (*GetNeighborAgentsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetNeighborAgents not implemented")
 }
-func (UnimplementedMasterServiceServer) mustEmbedUnimplementedMasterServiceServer() {}
+func (UnimplementedSimulatorServiceServer) mustEmbedUnimplementedSimulatorServiceServer() {}
 
-// UnsafeMasterServiceServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to MasterServiceServer will
+// UnsafeSimulatorServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to SimulatorServiceServer will
 // result in compilation errors.
-type UnsafeMasterServiceServer interface {
-	mustEmbedUnimplementedMasterServiceServer()
+type UnsafeSimulatorServiceServer interface {
+	mustEmbedUnimplementedSimulatorServiceServer()
 }
 
-func RegisterMasterServiceServer(s grpc.ServiceRegistrar, srv MasterServiceServer) {
-	s.RegisterService(&MasterService_ServiceDesc, srv)
+func RegisterSimulatorServiceServer(s grpc.ServiceRegistrar, srv SimulatorServiceServer) {
+	s.RegisterService(&SimulatorService_ServiceDesc, srv)
 }
 
-func _MasterService_RegisterWorker_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(RegisterWorkerRequest)
+func _SimulatorService_RunSimulator_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RunSimulatorRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(MasterServiceServer).RegisterWorker(ctx, in)
+		return srv.(SimulatorServiceServer).RunSimulator(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/api.MasterService/RegisterWorker",
+		FullMethod: "/api.SimulatorService/RunSimulator",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(MasterServiceServer).RegisterWorker(ctx, req.(*RegisterWorkerRequest))
+		return srv.(SimulatorServiceServer).RunSimulator(ctx, req.(*RunSimulatorRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _MasterService_UpdateWorker_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UpdateWorkerRequest)
+func _SimulatorService_GetNeighborAgents_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetNeighborAgentsRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(MasterServiceServer).UpdateWorker(ctx, in)
+		return srv.(SimulatorServiceServer).GetNeighborAgents(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/api.MasterService/UpdateWorker",
+		FullMethod: "/api.SimulatorService/GetNeighborAgents",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(MasterServiceServer).UpdateWorker(ctx, req.(*UpdateWorkerRequest))
+		return srv.(SimulatorServiceServer).GetNeighborAgents(ctx, req.(*GetNeighborAgentsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// MasterService_ServiceDesc is the grpc.ServiceDesc for MasterService service.
+// SimulatorService_ServiceDesc is the grpc.ServiceDesc for SimulatorService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var MasterService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "api.MasterService",
-	HandlerType: (*MasterServiceServer)(nil),
+var SimulatorService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "api.SimulatorService",
+	HandlerType: (*SimulatorServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "RegisterWorker",
-			Handler:    _MasterService_RegisterWorker_Handler,
+			MethodName: "RunSimulator",
+			Handler:    _SimulatorService_RunSimulator_Handler,
 		},
 		{
-			MethodName: "UpdateWorker",
-			Handler:    _MasterService_UpdateWorker_Handler,
-		},
-	},
-	Streams:  []grpc.StreamDesc{},
-	Metadata: "api.proto",
-}
-
-// WorkerServiceClient is the client API for WorkerService service.
-//
-// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type WorkerServiceClient interface {
-	RunWorker(ctx context.Context, in *RunWorkerRequest, opts ...grpc.CallOption) (*RunWorkerResponse, error)
-	GetAgents(ctx context.Context, in *GetAgentsRequest, opts ...grpc.CallOption) (*GetAgentsResponse, error)
-}
-
-type workerServiceClient struct {
-	cc grpc.ClientConnInterface
-}
-
-func NewWorkerServiceClient(cc grpc.ClientConnInterface) WorkerServiceClient {
-	return &workerServiceClient{cc}
-}
-
-func (c *workerServiceClient) RunWorker(ctx context.Context, in *RunWorkerRequest, opts ...grpc.CallOption) (*RunWorkerResponse, error) {
-	out := new(RunWorkerResponse)
-	err := c.cc.Invoke(ctx, "/api.WorkerService/RunWorker", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *workerServiceClient) GetAgents(ctx context.Context, in *GetAgentsRequest, opts ...grpc.CallOption) (*GetAgentsResponse, error) {
-	out := new(GetAgentsResponse)
-	err := c.cc.Invoke(ctx, "/api.WorkerService/GetAgents", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-// WorkerServiceServer is the server API for WorkerService service.
-// All implementations must embed UnimplementedWorkerServiceServer
-// for forward compatibility
-type WorkerServiceServer interface {
-	RunWorker(context.Context, *RunWorkerRequest) (*RunWorkerResponse, error)
-	GetAgents(context.Context, *GetAgentsRequest) (*GetAgentsResponse, error)
-	mustEmbedUnimplementedWorkerServiceServer()
-}
-
-// UnimplementedWorkerServiceServer must be embedded to have forward compatible implementations.
-type UnimplementedWorkerServiceServer struct {
-}
-
-func (UnimplementedWorkerServiceServer) RunWorker(context.Context, *RunWorkerRequest) (*RunWorkerResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method RunWorker not implemented")
-}
-func (UnimplementedWorkerServiceServer) GetAgents(context.Context, *GetAgentsRequest) (*GetAgentsResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetAgents not implemented")
-}
-func (UnimplementedWorkerServiceServer) mustEmbedUnimplementedWorkerServiceServer() {}
-
-// UnsafeWorkerServiceServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to WorkerServiceServer will
-// result in compilation errors.
-type UnsafeWorkerServiceServer interface {
-	mustEmbedUnimplementedWorkerServiceServer()
-}
-
-func RegisterWorkerServiceServer(s grpc.ServiceRegistrar, srv WorkerServiceServer) {
-	s.RegisterService(&WorkerService_ServiceDesc, srv)
-}
-
-func _WorkerService_RunWorker_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(RunWorkerRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(WorkerServiceServer).RunWorker(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/api.WorkerService/RunWorker",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(WorkerServiceServer).RunWorker(ctx, req.(*RunWorkerRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _WorkerService_GetAgents_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetAgentsRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(WorkerServiceServer).GetAgents(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/api.WorkerService/GetAgents",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(WorkerServiceServer).GetAgents(ctx, req.(*GetAgentsRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-// WorkerService_ServiceDesc is the grpc.ServiceDesc for WorkerService service.
-// It's only intended for direct use with grpc.RegisterService,
-// and not to be introspected or modified (even as a copy)
-var WorkerService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "api.WorkerService",
-	HandlerType: (*WorkerServiceServer)(nil),
-	Methods: []grpc.MethodDesc{
-		{
-			MethodName: "RunWorker",
-			Handler:    _WorkerService_RunWorker_Handler,
-		},
-		{
-			MethodName: "GetAgents",
-			Handler:    _WorkerService_GetAgents_Handler,
+			MethodName: "GetNeighborAgents",
+			Handler:    _SimulatorService_GetNeighborAgents_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
@@ -262,7 +140,7 @@ var WorkerService_ServiceDesc = grpc.ServiceDesc{
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type EngineServiceClient interface {
-	GetStatus(ctx context.Context, in *GetStatusRequest, opts ...grpc.CallOption) (*GetStatusResponse, error)
+	RegisterSimulator(ctx context.Context, in *RegisterSimulatorRequest, opts ...grpc.CallOption) (*RegisterSimulatorResponse, error)
 }
 
 type engineServiceClient struct {
@@ -273,9 +151,9 @@ func NewEngineServiceClient(cc grpc.ClientConnInterface) EngineServiceClient {
 	return &engineServiceClient{cc}
 }
 
-func (c *engineServiceClient) GetStatus(ctx context.Context, in *GetStatusRequest, opts ...grpc.CallOption) (*GetStatusResponse, error) {
-	out := new(GetStatusResponse)
-	err := c.cc.Invoke(ctx, "/api.EngineService/GetStatus", in, out, opts...)
+func (c *engineServiceClient) RegisterSimulator(ctx context.Context, in *RegisterSimulatorRequest, opts ...grpc.CallOption) (*RegisterSimulatorResponse, error) {
+	out := new(RegisterSimulatorResponse)
+	err := c.cc.Invoke(ctx, "/api.EngineService/RegisterSimulator", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -286,7 +164,7 @@ func (c *engineServiceClient) GetStatus(ctx context.Context, in *GetStatusReques
 // All implementations must embed UnimplementedEngineServiceServer
 // for forward compatibility
 type EngineServiceServer interface {
-	GetStatus(context.Context, *GetStatusRequest) (*GetStatusResponse, error)
+	RegisterSimulator(context.Context, *RegisterSimulatorRequest) (*RegisterSimulatorResponse, error)
 	mustEmbedUnimplementedEngineServiceServer()
 }
 
@@ -294,8 +172,8 @@ type EngineServiceServer interface {
 type UnimplementedEngineServiceServer struct {
 }
 
-func (UnimplementedEngineServiceServer) GetStatus(context.Context, *GetStatusRequest) (*GetStatusResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetStatus not implemented")
+func (UnimplementedEngineServiceServer) RegisterSimulator(context.Context, *RegisterSimulatorRequest) (*RegisterSimulatorResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RegisterSimulator not implemented")
 }
 func (UnimplementedEngineServiceServer) mustEmbedUnimplementedEngineServiceServer() {}
 
@@ -310,20 +188,20 @@ func RegisterEngineServiceServer(s grpc.ServiceRegistrar, srv EngineServiceServe
 	s.RegisterService(&EngineService_ServiceDesc, srv)
 }
 
-func _EngineService_GetStatus_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetStatusRequest)
+func _EngineService_RegisterSimulator_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RegisterSimulatorRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(EngineServiceServer).GetStatus(ctx, in)
+		return srv.(EngineServiceServer).RegisterSimulator(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/api.EngineService/GetStatus",
+		FullMethod: "/api.EngineService/RegisterSimulator",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(EngineServiceServer).GetStatus(ctx, req.(*GetStatusRequest))
+		return srv.(EngineServiceServer).RegisterSimulator(ctx, req.(*RegisterSimulatorRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -336,8 +214,8 @@ var EngineService_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*EngineServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "GetStatus",
-			Handler:    _EngineService_GetStatus_Handler,
+			MethodName: "RegisterSimulator",
+			Handler:    _EngineService_RegisterSimulator_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
