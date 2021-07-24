@@ -138,10 +138,10 @@ func (bd *ResourceGenerator) Apply(id string, port int) error{
 	}
 
 	// delete yaml
-	/*if err := os.Remove(fileName); err != nil {
+	if err := os.Remove(fileName); err != nil {
         fmt.Println(err)
 		return err
-    }*/
+    }
 	return nil
 }
 

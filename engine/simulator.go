@@ -18,6 +18,8 @@ type ISimulator interface {
 
 type Simulator struct {
 	ID string 
+	EngineAPI *EngineAPI
+	SimulatorAPI *SimulatorAPI 
 	ServerAddress string
 	Neighbors []ISimulator
 	Clock app.IClock
@@ -29,6 +31,7 @@ func NewSimulator() *Simulator {
 
 	Simulator := &Simulator{
 		ID: "0",
+		EngineAPI: NewEngineAPI("localhost:10000"),
 	}
 
 	return Simulator
@@ -59,6 +62,9 @@ func (sim *Simulator) GetArea() app.IArea{
 	return sim.Area
 }
 
+func (sim *Simulator) SetUp(){
+	sim.EngineAPI.RegisterSimulator(sim)
+}
 
 func (sim *Simulator) SyncNeighborArea() []app.IAgent{
 	return []app.IAgent{}
@@ -89,6 +95,7 @@ func (sim *Simulator) Step(){
 }
 
 func (sim *Simulator) Run() {
+	sim.SetUp()
 	fmt.Printf("Run Simulator\n")
 	for i := 0; i < 100; i++ {
 		sim.Step()

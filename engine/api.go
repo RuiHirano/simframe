@@ -137,7 +137,7 @@ func (ea *EngineAPI) SetUp() {
 	ea.Client = api.NewEngineServiceClient(conn)
 }
 
-func (ea *EngineAPI) RegisterSimulator(sim ISimulator) {
+func (ea *EngineAPI) RegisterSimulator(sim ISimulator) (app.IArea, app.IClock, []app.IAgent){
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
 	defer cancel()
 	r, err := ea.Client.RegisterSimulator(ctx, &api.RegisterSimulatorRequest{
@@ -151,6 +151,7 @@ func (ea *EngineAPI) RegisterSimulator(sim ISimulator) {
 		log.Fatalf("could not greet: %v", err)
 	}
 	log.Printf("Get status: %s", r.GetStatus())
+	return toIArea(r.GetArea()), toIClock(r.GetClock()), toIAgents(r.GetAgents())
 }
 
 
@@ -209,6 +210,17 @@ func toArea(area app.IArea) *api.Area{
 	}
 }
 
+func toIArea(area *api.Area) app.IArea{
+	return app.NewArea(
+		&app.Space{
+			MinX: float64(area.GetSpace().MinX),
+			MaxX: float64(area.GetSpace().MaxX),
+			MinY: float64(area.GetSpace().MinY),
+			MaxY: float64(area.GetSpace().MaxY),
+		},
+	)
+}
+
 func toPosition(pos *app.Position) *api.Position{
 	return &api.Position{
 		X: float32(pos.X),
@@ -216,10 +228,22 @@ func toPosition(pos *app.Position) *api.Position{
 	}
 }
 
+
+func toIPosition(pos *api.Position) *app.Position{
+	return &app.Position{
+		X: float64(pos.X),
+		Y: float64(pos.Y),
+	}
+}
+
 func toClock(clock app.IClock) *api.Clock{
 	return &api.Clock{
 		Timestamp: clock.GetTimestamp(),
 	}
+}
+
+func toIClock(clock *api.Clock) app.IClock{
+	return app.NewClock(clock.GetTimestamp())
 }
 
 func toAgent(agent app.IAgent) *api.Agent{
@@ -236,6 +260,18 @@ func toAgents(agents []app.IAgent) []*api.Agent{
 		apiAgents = append(apiAgents, toAgent(ag))
 	}
 	return apiAgents
+}
+
+func toIAgent(agent *api.Agent) *app.Agent{ // TODO to IAgent
+	return app.NewAgent(agent.GetId(), agent.GetName(), toIPosition(agent.GetPosition()))
+}
+
+func toIAgents(agents []*api.Agent) []app.IAgent{
+	appAgents := []app.IAgent{}
+	for _, ag := range agents{
+		appAgents = append(appAgents, toIAgent(ag))
+	}
+	return appAgents
 }
 
 func toSimulator(sim ISimulator) *api.Simulator{

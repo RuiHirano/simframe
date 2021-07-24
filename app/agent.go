@@ -1,6 +1,7 @@
 package app
 
 import (
+	"fmt"
 )
 
 type IAgent interface {
@@ -37,4 +38,8 @@ func (agent *Agent) GetName() string{
 
 func (agent *Agent) GetPosition() *Position{
 	return agent.Position
+}
+
+func (agent *Agent) Step(){
+	fmt.Printf("Agent %s step : %v\n", agent.ID, agent.Position)
 }

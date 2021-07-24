@@ -49,5 +49,5 @@ func (engine *Engine) Run(runType string) {
 
 func (engine *Engine) RegisterSimulatorHandler() (app.IArea, app.IClock, []app.IAgent){
 	fmt.Printf("Register simulator\n")
-	return app.NewArea(), app.NewClock(), []app.IAgent{}
+	return engine.App.GetScenarios()[0].GetArea(), engine.App.GetScenarios()[0].GetClock(), engine.App.GetScenarios()[0].GetAgents()
 }
