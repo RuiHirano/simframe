@@ -59,29 +59,33 @@ func (sim *Simulator) GetArea() app.IArea{
 	return sim.Area
 }
 
-func (sim *Simulator) GetNeighborData() []app.IAgent{
-	agents := []app.IAgent{}
-	return agents
+
+func (sim *Simulator) SyncNeighborArea() []app.IAgent{
+	return []app.IAgent{}
 }
 
-func (sim *Simulator) StepAgents(){}
-func (sim *Simulator) ClockForward(){}
-func (sim *Simulator) UpdateAgents(){}
-func (sim *Simulator) WaitNeighborsSync(){}
-
+func (sim *Simulator) UpdateAgents(agents []app.IAgent){}
+func (sim *Simulator) CalculateAgents(){
+	for _, agent := range sim.Agents{
+		agent.Step()
+	}
+}
+func (sim *Simulator) ForwardClock(){
+	sim.Clock.Forward()
+}
 func (sim *Simulator) Step(){
-	fmt.Printf("Step\n")
+	fmt.Printf("Step Time: %d\n", sim.Clock.GetTimestamp())
 	// 隣接エリアとのClock同期をとる
+	agents := sim.SyncNeighborArea()
 
 	// 隣接エリアのエージェントを取得
+	sim.UpdateAgents(agents)
 
 	// エージェント計算を行う
-
-	// 隣接エリアとの同期をとる
-
-	// 計算後のエージェントを取得する
+	sim.CalculateAgents()
 
 	// Clockを進める
+	sim.ForwardClock()
 }
 
 func (sim *Simulator) Run() {
