@@ -267,7 +267,7 @@ func (bd *ResourceGenerator) NewSimulator(id string, port int) Resource {
 					Env: []Env{
 					},
 					Ports: []Port{{ContainerPort: port}},
-					Command: []string{"./build/simframe-simulator", "run", "simulator"},
+					Command: []string{"./build/simframe-engine", "run", "simulator"},
 				},
 			},
 		},
