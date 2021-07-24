@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"net"
+	"strconv"
 
 	"github.com/RuiHirano/simframe/api"
 	"github.com/RuiHirano/simframe/app"
@@ -34,15 +35,15 @@ func (engine *Engine) Run(runType string) {
 	switch runType {
 	case "ENGINE":
 		engine.Serve()
-		// calc use resources
+		generator := NewResourceGenerator()
+		for i := 0; i < 4; i++ {
+			generator.Apply(strconv.Itoa(i), 9000+i)
+		}
 
-		// create resources
-
-		// apply resources
 	case "SIMULATOR":
 		sim := NewSimulator()
 		sim.Serve()
-		sim.Run()	
+		sim.Run()
 	}
 }
 
