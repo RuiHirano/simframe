@@ -4,12 +4,14 @@ import (
 	"context"
 	"fmt"
 	"log"
+	"net"
 	"time"
 
 	"github.com/RuiHirano/simframe/api"
 	"github.com/RuiHirano/simframe/app"
 
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/reflection"
 )
 
 type SimulatorAPI struct {
@@ -57,17 +59,36 @@ func (sa *SimulatorAPI) GetNeighborAgents(agents []app.IAgent) {
 }
 
 type SimulatorService struct{
+	Port int
 	RunSimulatorHandler func()
 	GetNeighborAgentsHandler func()
 	api.UnimplementedSimulatorServiceServer
 }
 
-func NewSimulatorService(rsh func(), gnah func()) *SimulatorService{
+func NewSimulatorService(port int, rsh func(), gnah func()) *SimulatorService{
    ms := &SimulatorService{
+	   Port: port,
 	   RunSimulatorHandler: rsh,
 	   GetNeighborAgentsHandler: rsh,
    }
    return ms
+}
+
+func (es *SimulatorService)  Serve() {
+	fmt.Printf("Serve Simulator\n")
+
+	server := grpc.NewServer()
+	api.RegisterSimulatorServiceServer(server, es)
+
+	reflection.Register(server)
+	lis, err := net.Listen("tcp", fmt.Sprintf(":%d", es.Port))
+	defer lis.Close()
+	if err != nil {
+		log.Fatalf("failed to listen: %v", err)
+	}
+
+	fmt.Printf("Serving! port is %d\n", es.Port)
+	server.Serve(lis)
 }
 
 func (es *SimulatorService) RunSimulator(ctx context.Context, request *api.RunSimulatorRequest) (*api.RunSimulatorResponse, error) {
@@ -135,15 +156,33 @@ func (ea *EngineAPI) RegisterSimulator(sim ISimulator) {
 
 type EngineService struct{
 	RegisterSimulatorHandler func() (app.IArea, app.IClock, []app.IAgent)
+	Port int
 	api.UnimplementedEngineServiceServer
 }
 
-func NewEngineService(rsh func() (app.IArea, app.IClock, []app.IAgent)) *EngineService{
-   ms := &EngineService{
+func NewEngineService(port int, rsh func() (app.IArea, app.IClock, []app.IAgent)) *EngineService{
+   es := &EngineService{
+	   Port: port,
 	   RegisterSimulatorHandler: rsh,
    }
-   return ms
+   return es
 }
+
+func (es *EngineService) Serve() {
+	fmt.Printf("Serve Engine\n")
+	server := grpc.NewServer()
+	api.RegisterEngineServiceServer(server, es)
+
+	reflection.Register(server)
+	lis, err := net.Listen("tcp", fmt.Sprintf(":%d", es.Port))
+	defer lis.Close()
+	if err != nil {
+		log.Fatalf("failed to listen: %v", err)
+	}
+
+	fmt.Printf("Serving! port is %d\n", es.Port)
+	server.Serve(lis)
+ }
 
 func (es *EngineService) RegisterSimulator(ctx context.Context, request *api.RegisterSimulatorRequest) (*api.RegisterSimulatorResponse, error) {
    fmt.Printf("getRequest %v\n", request)

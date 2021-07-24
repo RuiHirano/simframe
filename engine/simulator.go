@@ -2,14 +2,8 @@ package engine
 
 import (
 	"fmt"
-	"log"
-	"net"
-
-	"github.com/RuiHirano/simframe/api"
 
 	"github.com/RuiHirano/simframe/app"
-	"google.golang.org/grpc"
-	"google.golang.org/grpc/reflection"
 )
 
 type ISimulator interface {
@@ -97,26 +91,6 @@ func (sim *Simulator) Run() {
 	}
 	fmt.Printf("Simulator Finished\n")
 }
-
-func (sim *Simulator) Serve() {
-	fmt.Printf("Serve Simulator\n")
-
-	server := grpc.NewServer()
-	svc := NewSimulatorService(sim.RunSimulatorHandler, sim.GetNeighborAgentsHandler)
-	// 実行したい実処理をseverに登録する
-	api.RegisterSimulatorServiceServer(server, svc)
-
-	reflection.Register(server)
-	lis, err := net.Listen("tcp", ":9000")
-	defer lis.Close()
-	if err != nil {
-		log.Fatalf("failed to listen: %v", err)
-	}
-
-	fmt.Printf("Serving! port is 9000\n")
-	server.Serve(lis)
-}
-
 
 func (sim *Simulator) RunSimulatorHandler(){
 	fmt.Printf("Run simulator\n")

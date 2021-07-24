@@ -8,6 +8,7 @@ import (
 	"os/exec"
 	"strconv"
 
+	"github.com/RuiHirano/simframe/app"
 	"github.com/google/uuid"
 	"gopkg.in/yaml.v2"
 )
@@ -98,11 +99,13 @@ type IResourceGenerator interface {
 }
 
 type ResourceGenerator struct {
+	App app.IApp
 }
 
-func NewResourceGenerator() *ResourceGenerator {
+func NewResourceGenerator(ap app.IApp) *ResourceGenerator {
 
 	rc := &ResourceGenerator{
+		App: ap,
 	}
 
 	return rc
@@ -135,10 +138,10 @@ func (bd *ResourceGenerator) Apply(id string, port int) error{
 	}
 
 	// delete yaml
-	if err := os.Remove(fileName); err != nil {
+	/*if err := os.Remove(fileName); err != nil {
         fmt.Println(err)
 		return err
-    }
+    }*/
 	return nil
 }
 
@@ -262,7 +265,7 @@ func (bd *ResourceGenerator) NewSimulator(id string, port int) Resource {
 			Containers: []Container{
 				{
 					Name:            "simulator"+id,
-					Image:           fmt.Sprintf("simframe/%s:%s", "sample", "1.0.0"),
+					Image:           fmt.Sprintf("simframe/%s:%s", bd.App.GetConfig().GetName(), bd.App.GetConfig().GetVersion()),
 					ImagePullPolicy: "Never",
 					Env: []Env{
 					},
