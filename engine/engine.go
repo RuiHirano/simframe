@@ -44,6 +44,7 @@ func (engine *Engine) Run(runType string) {
 	}
 	wg := sync.WaitGroup{}
 	wg.Add(1)
+	wg.Wait()
 }
 
 func (engine *Engine) RegisterSimulatorHandler() (app.IArea, app.IClock, []app.IAgent){
