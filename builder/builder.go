@@ -21,8 +21,8 @@ var (
 )
 
 type SimframeConfig struct{
-	Name string
-	Version string
+	Name string `json:"name"`
+	Version string `json:"version"`
 }
 
 func init(){
