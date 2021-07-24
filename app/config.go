@@ -11,7 +11,7 @@ import (
 
 type IConfig interface {
 	GetName() string
-	GetConfig() string
+	GetVersion() string
 }
 
 type Config struct{
