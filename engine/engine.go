@@ -5,6 +5,7 @@ import (
 	"log"
 	"net"
 	"strconv"
+	"sync"
 
 	"github.com/RuiHirano/simframe/api"
 	"github.com/RuiHirano/simframe/app"
@@ -34,17 +35,19 @@ func (engine *Engine) Run(runType string) {
 	//unType := "WORKER"
 	switch runType {
 	case "ENGINE":
+		go engine.Serve()
 		generator := NewResourceGenerator()
 		for i := 0; i < 4; i++ {
 			generator.Apply(strconv.Itoa(i), 9000+i)
 		}
-		engine.Serve()
 
 	case "SIMULATOR":
 		sim := NewSimulator()
+		go sim.Serve()
 		sim.Run()
-		sim.Serve()
 	}
+	wg := sync.WaitGroup{}
+	wg.Add(1)
 }
 
 
