@@ -76,6 +76,7 @@ func (sim *Simulator) UpdateAgents(){}
 func (sim *Simulator) WaitNeighborsSync(){}
 
 func (sim *Simulator) Step(){
+	fmt.Printf("Step\n")
 	// 隣接エリアとのClock同期をとる
 
 	// 隣接エリアのエージェントを取得
@@ -94,6 +95,7 @@ func (sim *Simulator) Run() {
 	for i := 0; i < 100; i++ {
 		sim.Step()
 	}
+	fmt.Printf("Simulator Finished\n")
 }
 
 func (sim *Simulator) Serve() {
