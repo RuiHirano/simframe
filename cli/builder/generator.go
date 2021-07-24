@@ -268,7 +268,7 @@ func (bd *Generator) NewEngine() Resource {
 					Env: []Env{
 					},
 					Ports: []Port{{ContainerPort: 10000}},
-					Command: []string{"./build/simframe-engine", "run", "engine"},
+					Command: []string{"./build/main", "run", "engine"},
 				},
 			},
 		},
