@@ -259,7 +259,7 @@ func (bd *ResourceGenerator) NewSimulator(id string, port int) Resource {
 		Kind:       "Pod",
 		Metadata: Metadata{
 			Name:   "simulator"+id,
-			Labels: Label{App: "simulator"+id},
+			Labels: Label{App: "simframe"},
 		},
 		Spec: Spec{
 			Containers: []Container{
