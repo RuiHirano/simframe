@@ -31,7 +31,7 @@ func init(){
     if !ok {
         panic("No caller information")
     }
-    builderDirPath = path.Dir(path.Dir(filename) + "/builder/")
+    builderDirPath = path.Dir(path.Dir(filename))+"/builder"
     p, _ := os.Getwd()
     currentDirPath = p
 }
@@ -58,9 +58,9 @@ func NewBuilder(id string) *Builder {
 }
 
 func (bd *Builder) InstallDockerFile(){
-    err := copy.Copy(fmt.Sprintf("%s/Dockerfile", builderDirPath), fmt.Sprintf("%s/Dockerfile", currentDirPath))
+    err := copy.Copy(fmt.Sprintf("%s/Dockerfile", builderDirPath), fmt.Sprintf("%s/build/Dockerfile", currentDirPath))
     if err != nil {
-        color.Red("Install dockerfile error %v\n", err)
+        color.Red("Install dockerfile error %v\n", err,fmt.Sprintf("%s/Dockerfile", builderDirPath))
         os.Exit(1)
     }
 }
@@ -69,7 +69,7 @@ func (bd *Builder) BuildDockerImage(){
 	color.Green("Building docker image...\n")
 	s := spinner.New(spinner.CharSets[9], 100*time.Millisecond)
 	//cmd := exec.Command(builderDirPath+"/docker_build.sh", "sample", "1.0.0", currentDirPath)
-	cmd := exec.Command(fmt.Sprintf("docker build -t simframe/%s:%s %s", bd.SimframeConfig.Name, bd.SimframeConfig.Version, currentDirPath))
+	cmd := exec.Command("docker", "image", "build", "-t", fmt.Sprintf("simframe/%s:%s", bd.SimframeConfig.Name, bd.SimframeConfig.Version), "-f", "./build/Dockerfile", ".")
 	stdout, err := cmd.StdoutPipe()
 	color.Green("Command: %v\n", cmd.String())
 
@@ -78,8 +78,8 @@ func (bd *Builder) BuildDockerImage(){
 		os.Exit(1)
 	}
 
-	s.Start() 
 	cmd.Start()
+	s.Start() 
 
 	scanner := bufio.NewScanner(stdout)
 	for scanner.Scan() {
@@ -101,10 +101,14 @@ func (bd *Builder) GenerateK8sResource(){
 }
 
 func (bd *Builder) CreateBuildDirectory(){
-	if err := os.Mkdir(fmt.Sprintf("%s/build", currentDirPath), 0777); err != nil {
-        color.Red("Error: %v\n", err)
-		os.Exit(1)
-    }
+	dir := fmt.Sprintf("%s/build", currentDirPath)
+	if f, err := os.Stat(dir); os.IsNotExist(err) || !f.IsDir() {
+		color.Green("Creating build directory...\n")
+		if err := os.Mkdir(dir, 0777); err != nil {
+			color.Red("Error: %v\n", err)
+			os.Exit(1)
+		}
+	} 	
 }
 
 func (bd *Builder) SetConfig(){
@@ -113,10 +117,11 @@ func (bd *Builder) SetConfig(){
 		color.Red("cannot find simframe.config.json\n")
 		os.Exit(1)
 	}
-	var sc *SimframeConfig
-	json.Unmarshal(raw, sc)
+	sc := &SimframeConfig{}
+	err = json.Unmarshal(raw, sc)
 	if sc == nil || sc.Name == "" || sc.Version == ""{
 		color.Red("invalid args in simframe.config.json\n")
+		color.Red("%v", raw, fmt.Sprintf("%s/simframe.config.json", currentDirPath), err)
 		os.Exit(1)
 	}
 	bd.SimframeConfig = sc

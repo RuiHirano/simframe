@@ -9,3 +9,6 @@
 ☐ execute task
     ☐ higashiyama
     ☐ centrair
+
+☐ simcli deleteで関連するsimulator podごと削除する
+☐ develop用にreplaceでできるようにする

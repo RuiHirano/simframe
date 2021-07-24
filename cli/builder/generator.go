@@ -220,7 +220,7 @@ func (bd *Generator) WriteOnFile(fileName string, data interface{}) error {
 		return err
 	}
 
-	file, err := os.OpenFile(fileName, os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
+	file, err := os.OpenFile(fileName, os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0666)
 	if err != nil {
 		log.Fatal(err)
 	}

@@ -2,8 +2,10 @@ module github.com/RuiHirano/simframe/cli
 
 go 1.13
 
+replace github.com/RuiHirano/simframe/builder => ./builder
+
 require (
-	github.com/RuiHirano/simframe/builder v0.0.0-20210724040846-99481ee5e61f
+	github.com/RuiHirano/simframe/builder v0.0.0-00010101000000-000000000000
 	github.com/briandowns/spinner v1.16.0
 	github.com/fatih/color v1.12.0
 	github.com/juju/ansiterm v0.0.0-20210706145210-9283cdf370b5 // indirect
