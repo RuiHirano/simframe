@@ -13,10 +13,10 @@ type Clock struct {
 	Timestamp uint64
 }
 
-func NewClock() *Clock {
+func NewClock(timestamp uint64) *Clock {
 
 	clock := &Clock{
-		Timestamp: 0,
+		Timestamp: timestamp,
 	}
 
 	return clock

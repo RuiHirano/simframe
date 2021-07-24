@@ -11,10 +11,10 @@ type Area struct {
 	Space *Space
 }
 
-func NewArea() *Area {
+func NewArea(space *Space) *Area {
 
 	area := &Area{
-		Space: &Space{MinX: 0, MaxX:10, MinY:0, MaxY:10},
+		Space: space,
 	}
 
 	return area
