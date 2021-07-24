@@ -10,6 +10,8 @@ import (
 )
 
 type IConfig interface {
+	GetName() string
+	GetConfig() string
 }
 
 type Config struct{
@@ -39,4 +41,12 @@ func (cf *Config) LoadConfig(){
 		color.Red("%v", raw, fmt.Sprintf("%s/simframe.config.json", currentDirPath), err)
 		os.Exit(1)
 	}
+}
+
+func (cf *Config) GetName() string{
+	return cf.Name
+}
+
+func (cf *Config) GetVersion() string{
+	return cf.Version
 }
