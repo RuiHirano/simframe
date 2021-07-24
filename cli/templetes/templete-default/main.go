@@ -18,7 +18,8 @@ func main() {
 	
 
 	sns :=  myapp.Scenarios()
-	ap := app.NewApp(sns)
+	conf :=  app.NewConfig()
+	ap := app.NewApp(sns, conf)
 
 	en := engine.NewEngine(ap)
 

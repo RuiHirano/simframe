@@ -257,7 +257,7 @@ func (bd *Generator) NewEngine() Resource {
 		Kind:       "Pod",
 		Metadata: Metadata{
 			Name:   "engine",
-			Labels: Label{App: "engine"},
+			Labels: Label{App: "simframe"},
 		},
 		Spec: Spec{
 			Containers: []Container{

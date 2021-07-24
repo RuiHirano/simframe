@@ -12,6 +12,8 @@ github.com/RuiHirano/simframe/api v0.0.0-20210723064512-cfba967557e6 h1:PGSpoFf5
 github.com/RuiHirano/simframe/api v0.0.0-20210723064512-cfba967557e6/go.mod h1:Xog/pyXD+S/LPEog59b0laVtOr7R1zxL1LYcAg/ZZi8=
 github.com/RuiHirano/simframe/api v0.0.0-20210724032608-7899d6bfaa73 h1:zPDdgcY4d3kuJlN0uw+6jJfkrL3nZtMp8bca4H8YohM=
 github.com/RuiHirano/simframe/api v0.0.0-20210724032608-7899d6bfaa73/go.mod h1:Xog/pyXD+S/LPEog59b0laVtOr7R1zxL1LYcAg/ZZi8=
+github.com/RuiHirano/simframe/api v0.0.0-20210724081525-fe66fe4b2833 h1:alJlIJrSahCtZUbzOckTQLfvwkMh3DFHqtPb4kVBX+c=
+github.com/RuiHirano/simframe/api v0.0.0-20210724081525-fe66fe4b2833/go.mod h1:Xog/pyXD+S/LPEog59b0laVtOr7R1zxL1LYcAg/ZZi8=
 github.com/RuiHirano/simframe/app v0.0.0-20210719111851-b4da8dce121e h1:r/qBD9KOOAQcXZnCREYSgojO11zG9XJD4e39UNb1KDU=
 github.com/RuiHirano/simframe/app v0.0.0-20210719111851-b4da8dce121e/go.mod h1:M7gSHFQu7Pfjloknf3kPiYHvRBHqnKV1hEx7EMfhlGc=
 github.com/RuiHirano/simframe/app v0.0.0-20210720100252-33c11f9006dc h1:Bjzq/QLRjfRV/hfEYNTjCQ+0sKTm7FNYNvqYwTuZY8U=
@@ -31,6 +33,9 @@ github.com/RuiHirano/simframe/app v0.0.0-20210724040846-99481ee5e61f h1:RPJYR57E
 github.com/RuiHirano/simframe/app v0.0.0-20210724040846-99481ee5e61f/go.mod h1:ZGQHRce4nN46V3nIG2GaoWvP70Ito/dItMIKf+/QS+M=
 github.com/RuiHirano/simframe/app v0.0.0-20210724043709-7bcde72837fc h1:ajqXYp3eNcHbVzT1A6E0BaA756Lc5kAtsQrVgKHkvt8=
 github.com/RuiHirano/simframe/app v0.0.0-20210724043709-7bcde72837fc/go.mod h1:ZGQHRce4nN46V3nIG2GaoWvP70Ito/dItMIKf+/QS+M=
+github.com/RuiHirano/simframe/app v0.0.0-20210724081525-fe66fe4b2833/go.mod h1:t0L1QHpvYZzqM6hwY2p309eXDm01DYyHXnsSCxUddgo=
+github.com/RuiHirano/simframe/app v0.0.0-20210724084832-398d659f1192 h1:aWojwtAJnE4yaIyV2IlrxblbQKpii+ktbKC+BUI7KcY=
+github.com/RuiHirano/simframe/app v0.0.0-20210724084832-398d659f1192/go.mod h1:t0L1QHpvYZzqM6hwY2p309eXDm01DYyHXnsSCxUddgo=
 github.com/RuiHirano/simframe/app/config v0.0.0-20210719111851-b4da8dce121e h1:tIkgXZFbmlAPWJjReP3zJ3BNe1Fd+yxD5gcHIwcCOUo=
 github.com/RuiHirano/simframe/app/config v0.0.0-20210719111851-b4da8dce121e/go.mod h1:IkRskGiBmeKQskZK/gVQ5AHDvfxCOZQUf5Wy4DRDxsA=
 github.com/RuiHirano/simframe/app/config v0.0.0-20210720100252-33c11f9006dc h1:ueXYPbSit6aZe2EJ1aU/4z/IdXvqcQwlBHGGmseC8FM=
@@ -56,6 +61,8 @@ github.com/RuiHirano/simframe/engine v0.0.0-20210724040846-99481ee5e61f h1:w5H0r
 github.com/RuiHirano/simframe/engine v0.0.0-20210724040846-99481ee5e61f/go.mod h1:G1HCi6nlVAwZYCwUlKryH00mSGiaxqpS/GYiUwm8VM4=
 github.com/RuiHirano/simframe/engine v0.0.0-20210724043709-7bcde72837fc h1:qU3kr+VFxY/YFn2m8KJjw+qJid6mO/bbD5hnybc+yJQ=
 github.com/RuiHirano/simframe/engine v0.0.0-20210724043709-7bcde72837fc/go.mod h1:G1HCi6nlVAwZYCwUlKryH00mSGiaxqpS/GYiUwm8VM4=
+github.com/RuiHirano/simframe/engine v0.0.0-20210724084832-398d659f1192 h1:TY9SzlSE3WvTSt7PXPO/47RsEvqQP7rSJqgq5RekQPA=
+github.com/RuiHirano/simframe/engine v0.0.0-20210724084832-398d659f1192/go.mod h1:+xFJZLcMzpHnfaW77YHAYz1WLFjzff+xkLf0vPnx/xc=
 github.com/RuiHirano/simframe/engine/master v0.0.0-20210722053619-b424052e6aad/go.mod h1:/Kgc3kT93uFB2PKYUKm9T5X0a89sZhwm3ysYlrDmtA4=
 github.com/RuiHirano/simframe/engine/worker v0.0.0-20210722053619-b424052e6aad/go.mod h1:zyX9e2Fq3DelW1yKQf/5GsRcyfwm5wMREqKpZJlWBi0=
 github.com/RuiHirano/simframe/pads v0.0.0-20210720100252-33c11f9006dc h1:XG3+xtP0f9smbwUOeWkms3qWZlr5yoxFd5Cm+RQeGvQ=
