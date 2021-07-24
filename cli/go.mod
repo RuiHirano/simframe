@@ -3,8 +3,7 @@ module github.com/RuiHirano/simframe/cli
 go 1.13
 
 require (
-	github.com/RuiHirano/simframe/builder v0.0.0-20210721053332-f8df2845984a
-	github.com/RuiHirano/simframe/util v0.0.0-20210721053332-f8df2845984a // indirect
+	github.com/RuiHirano/simframe/builder v0.0.0-20210724040846-99481ee5e61f
 	github.com/briandowns/spinner v1.16.0
 	github.com/fatih/color v1.12.0
 	github.com/juju/ansiterm v0.0.0-20210706145210-9283cdf370b5 // indirect
