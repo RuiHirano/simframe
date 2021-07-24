@@ -1,4 +1,4 @@
-module model
+module scenario
 
 go 1.13
 

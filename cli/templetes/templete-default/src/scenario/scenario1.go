@@ -3,28 +3,26 @@ package scenario
 import (
 	mymodel "model"
 
-	"github.com/RuiHirano/simframe/app/model"
-	"github.com/RuiHirano/simframe/app/scenario"
-	"github.com/RuiHirano/simframe/util"
+	"github.com/RuiHirano/simframe/app"
 )
 
 type Scenario1 struct {
-	*scenario.Scenario
+	*app.Scenario
 }
 
 func NewScenario1() *Scenario1 {
 
-	agents := []model.IAgent{
-		mymodel.NewTrain("1", &util.Position{X: 2, Y: 4}),
-		mymodel.NewTrain("2", &util.Position{X: 3, Y: 3}),
-		mymodel.NewCar("3", &util.Position{X: 1, Y: 5}),
+	agents := []app.IAgent{
+		mymodel.NewTrain("1", &app.Position{X: 2, Y: 4}),
+		mymodel.NewTrain("2", &app.Position{X: 3, Y: 3}),
+		mymodel.NewCar("3", &app.Position{X: 1, Y: 5}),
 	}
-	area := scenario.NewArea()
+	area := app.NewArea()
 
-	clock := scenario.NewClock()
+	clock := app.NewClock()
 
 	scenario := &Scenario1{
-		scenario.NewScenario(agents, area, clock),
+		app.NewScenario(agents, area, clock),
 	}
 
 	return scenario

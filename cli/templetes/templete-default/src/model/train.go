@@ -1,21 +1,19 @@
-package train
+package model
 
 import (
 	"fmt"
 
-	"github.com/RuiHirano/simframe/util"
-
-	"github.com/RuiHirano/simframe/app/model"
+	"github.com/RuiHirano/simframe/app"
 )
 
 type Train struct {
-	*model.Agent
+	*app.Agent
 }
 
-func NewTrain(id string, position *util.Position) *Train {
+func NewTrain(id string, position *app.Position) *Train {
 
 	train := &Train{
-		model.NewAgent(id, position),
+		app.NewAgent(id, "train", position),
 	}
 
 	return train

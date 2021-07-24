@@ -1,5 +1,4 @@
 {
     "name": "templete-default",
-    "version": "0.0.1",
-    "entry": "./src/app.go"
+    "version": "0.0.1"
 }

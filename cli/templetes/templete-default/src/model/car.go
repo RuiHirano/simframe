@@ -1,21 +1,19 @@
-package train
+package model
 
 import (
 	"fmt"
 
-	"github.com/RuiHirano/simframe/util"
-
-	"github.com/RuiHirano/simframe/app/model"
+	"github.com/RuiHirano/simframe/app"
 )
 
 type Car struct {
-	*model.Agent
+	*app.Agent
 }
 
-func NewCar(id string, position *util.Position) *Car {
+func NewCar(id string, position *app.Position) *Car {
 
 	car := &Car{
-		model.NewAgent(id, position),
+		app.NewAgent(id, "car", position),
 	}
 
 	return car
@@ -26,7 +24,7 @@ func (car *Car) Step() {
 	car.Position = car.NextPosition()
 }
 
-func (car *Car) NextPosition() *util.Position{
-	nextPosition := &util.Position{X: car.Position.X+1, Y: car.Position.Y+1}
+func (car *Car) NextPosition() *app.Position{
+	nextPosition := &app.Position{X: car.Position.X+1, Y: car.Position.Y+1}
 	return nextPosition
 }

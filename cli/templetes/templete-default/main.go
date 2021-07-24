@@ -18,8 +18,7 @@ func main() {
 	
 
 	sns :=  myapp.Scenarios()
-	config := myapp.Config()
-	ap := app.NewApp(sns, config)
+	ap := app.NewApp(sns)
 
 	en := engine.NewEngine(ap)
 
@@ -29,10 +28,10 @@ func main() {
 	switch arg {
 	case "run":	
 		switch runType {
-		case "master":	
-			en.RunPads("MASTER")
-		case "worker":	
-			en.RunPads("WORKER")
+		case "engine":	
+			en.Run("ENGINE")
+		case "simulator":	
+			en.Run("SIMULATOR")
 		}
 	}
 	color.Red("invalid arg in engine\n")
