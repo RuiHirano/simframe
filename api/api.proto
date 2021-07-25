@@ -10,6 +10,7 @@ service SimulatorService {
 }
 
 message RunSimulatorRequest{
+    string sender_id = 1;
 }
 
 message RunSimulatorResponse{
@@ -17,7 +18,8 @@ message RunSimulatorResponse{
 }
 
 message GetNeighborAgentsRequest{
-    repeated Agent agents = 1;
+    string sender_id = 1;
+    repeated Agent agents = 2;
 }
 
 message GetNeighborAgentsResponse{
@@ -38,12 +40,19 @@ message RegisterSimulatorResponse{
     Area area = 2;
     Clock clock = 3;
 	repeated Agent agents = 4;
+    repeated Neighbor neighbors =5;
+    uint64 port = 6;
 }
 
 message Simulator {
     string id = 1;
-	string server_address = 2;
-    repeated Simulator neighbors = 3;
+	uint64 port = 2;
+    repeated Neighbor neighbors = 3;
+}
+
+message Neighbor {
+    string id = 1;
+	uint64 port = 2;
 }
 
 

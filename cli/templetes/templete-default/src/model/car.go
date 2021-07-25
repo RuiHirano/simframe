@@ -10,10 +10,14 @@ type Car struct {
 	*app.Agent
 }
 
-func NewCar(id string, position *app.Position) *Car {
+func NewCar(id string, position *app.Position) app.IAgent {
 
 	car := &Car{
-		app.NewAgent(id, "car", position),
+		&app.Agent{
+			ID: id, 
+			Name: "CAR",
+			Position: position,
+		},
 	}
 
 	return car

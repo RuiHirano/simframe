@@ -4,13 +4,20 @@ import (
 	"fmt"
 
 	"github.com/RuiHirano/simframe/app"
+	"github.com/fatih/color"
 )
+
+type Neighbor struct{
+	ID string
+	Port int
+	API *SimulatorAPI
+}
 
 type ISimulator interface {
 	Run()
 	GetID() string
-	GetServerAddress() string
-	GetNeighbors() []ISimulator
+	GetPort() int
+	GetNeighbors() []*Neighbor
 	GetClock() app.IClock
 	GetAgents() []app.IAgent
 	GetArea() app.IArea
@@ -18,35 +25,45 @@ type ISimulator interface {
 
 type Simulator struct {
 	ID string 
+	App app.IApp
 	EngineAPI *EngineAPI
 	SimulatorAPI *SimulatorAPI 
-	ServerAddress string
-	Neighbors []ISimulator
+	Port int
+	Neighbors []*Neighbor
 	Clock app.IClock
 	Agents []app.IAgent
 	Area app.IArea
 }
 
-func NewSimulator() *Simulator {
+func NewSimulator(ap app.IApp) *Simulator {
 
-	Simulator := &Simulator{
+	sim := &Simulator{
 		ID: "0",
-		EngineAPI: NewEngineAPI("localhost:10000"),
+		App: ap,
+		EngineAPI: NewEngineAPI(10000, ap),
 	}
-
-	return Simulator
+	return sim
 }
 
-
+func (sim *Simulator) SetUp(){
+	// engineから必要なareaを取得する
+	color.Green("Register simulator to engine...\n")
+	sim.Area, sim.Clock, sim.Agents, sim.Neighbors, sim.Port = sim.EngineAPI.RegisterSimulator(sim.ID, sim)
+	fmt.Printf("test", sim.Neighbors, sim.Port)
+	// service登録
+	color.Green("Register simulator service...\n")
+	svc := NewSimulatorService(sim.Port, sim.RunSimulatorHandler, sim.GetNeighborAgentsHandler)
+	go svc.Serve()
+}
 
 func (sim *Simulator) GetID() string{
 	return sim.ID
 }
-func (sim *Simulator) GetServerAddress() string{
-	return sim.ServerAddress
+func (sim *Simulator) GetPort() int{
+	return sim.Port
 }
 
-func (sim *Simulator) GetNeighbors() []ISimulator{
+func (sim *Simulator) GetNeighbors() []*Neighbor{
 	return sim.Neighbors
 }
 
@@ -62,11 +79,19 @@ func (sim *Simulator) GetArea() app.IArea{
 	return sim.Area
 }
 
-func (sim *Simulator) SetUp(){
-	sim.EngineAPI.RegisterSimulator(sim)
-}
 
 func (sim *Simulator) SyncNeighborArea() []app.IAgent{
+	// send Ack
+
+	// wait Ack from all neighbors
+	//syn := NewSyncronizer()
+	// send sync request
+	//for _, nei := range sim.Neighbors{
+		//syn.RegisterId(nei.GetID())
+		//sim.Agents = sim.SimulatorAPI.GetNeighborAgents(sim.ID, []app.IAgent{})
+	//}
+	//syn.Wait()
+
 	return []app.IAgent{}
 }
 
@@ -95,9 +120,9 @@ func (sim *Simulator) Step(){
 }
 
 func (sim *Simulator) Run() {
-	sim.SetUp()
 	fmt.Printf("Run Simulator\n")
-	for i := 0; i < 100; i++ {
+	sim.SetUp()
+	for i := 0; i < 10; i++ {
 		sim.Step()
 	}
 	fmt.Printf("Simulator Finished\n")

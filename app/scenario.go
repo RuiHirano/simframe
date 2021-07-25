@@ -1,8 +1,6 @@
 package app
 
-import (
-	"reflect"
-)
+//"reflect"
 
 type IScenario interface {
 	GetArea() IArea
@@ -28,6 +26,7 @@ func NewScenario(agents []IAgent, area IArea, clock IClock) IScenario {
 		Area: area,
 		Clock: clock,
 		Agents: agents,
+		ModelMap: ModelMap{},
 	}
 
 	return scenario
@@ -52,7 +51,7 @@ func (sn *Scenario) GetModelMap() ModelMap{
 func (sn *Scenario) RegisterModel(models []Model){
 	for _, modelFunc := range models{
 		md := modelFunc("", &Position{X: 0, Y: 0})
-		mdType := reflect.TypeOf(md).String()
-		sn.ModelMap[mdType] = modelFunc
+		//mdType := reflect.TypeOf(md).String()
+		sn.ModelMap[md.GetName()] = modelFunc
 	}
 }

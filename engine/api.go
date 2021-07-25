@@ -10,46 +10,52 @@ import (
 	"github.com/RuiHirano/simframe/api"
 	"github.com/RuiHirano/simframe/app"
 
+	"github.com/fatih/color"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
 )
 
 type SimulatorAPI struct {
-	Address string
+	Port int
 	Client api.SimulatorServiceClient
 }
 
-func NewSimulatorAPI(address string) *SimulatorAPI {
+func NewSimulatorAPI(port int) *SimulatorAPI {
 	sa := &SimulatorAPI{
-		Address: address,
+		Port: port,
 	}
 	sa.SetUp()
 	return sa
 }
 
 func (sa *SimulatorAPI) SetUp() {
-	conn, err := grpc.Dial(sa.Address, grpc.WithInsecure(), grpc.WithBlock())
+	color.Green("Connecting to simulator...\n")
+	conn, err := grpc.Dial(fmt.Sprintf(":%d", sa.Port), grpc.WithInsecure(), grpc.WithBlock())
 	if err != nil {
 		log.Fatalf("did not connect: %v", err)
 	}
 	defer conn.Close()
 	sa.Client = api.NewSimulatorServiceClient(conn)
+	color.Green("Success connecting to simulator.\n")
 }
 
-func (sa *SimulatorAPI) RunSimulator() {
+func (sa *SimulatorAPI) RunSimulator(senderId string ) {
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
 	defer cancel()
-	r, err := sa.Client.RunSimulator(ctx, &api.RunSimulatorRequest{})
+	r, err := sa.Client.RunSimulator(ctx, &api.RunSimulatorRequest{
+		SenderId: senderId,
+	})
 	if err != nil {
 		log.Fatalf("could not greet: %v", err)
 	}
 	log.Printf("Get status: %s", r.GetStatus())
 }
 
-func (sa *SimulatorAPI) GetNeighborAgents(agents []app.IAgent) {
+func (sa *SimulatorAPI) GetNeighborAgents(senderId string, agents []app.IAgent) {
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
 	defer cancel()
 	r, err := sa.Client.GetNeighborAgents(ctx, &api.GetNeighborAgentsRequest{
+		SenderId: senderId,
 		Agents: []*api.Agent{},
 	})
 	if err != nil {
@@ -116,52 +122,56 @@ func (es *SimulatorService) GetNeighborAgents(ctx context.Context, request *api.
 
 
 type EngineAPI struct {
-	Address string
+	Port int
+	App app.IApp
 	Client api.EngineServiceClient
 }
 
-func NewEngineAPI(address string) *EngineAPI {
+func NewEngineAPI(port int, ap app.IApp) *EngineAPI {
 	ea := &EngineAPI{
-		Address: address,
+		App: ap,
+		Port: port,
 	}
 	ea.SetUp()
 	return ea
 }
 
 func (ea *EngineAPI) SetUp() {
-	conn, err := grpc.Dial(ea.Address, grpc.WithInsecure(), grpc.WithBlock())
+	color.Green("Connecting to engine...\n")
+	conn, err := grpc.Dial(fmt.Sprintf(":%d", ea.Port), grpc.WithInsecure(), grpc.WithBlock())
 	if err != nil {
 		log.Fatalf("did not connect: %v", err)
 	}
-	defer conn.Close()
+	//defer conn.Close()
 	ea.Client = api.NewEngineServiceClient(conn)
+	color.Green("Success connecting to engine.\n")
 }
 
-func (ea *EngineAPI) RegisterSimulator(sim ISimulator) (app.IArea, app.IClock, []app.IAgent){
+func (ea *EngineAPI) RegisterSimulator(senderId string, sim ISimulator) (app.IArea, app.IClock, []app.IAgent, []*Neighbor, int){
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
 	defer cancel()
 	r, err := ea.Client.RegisterSimulator(ctx, &api.RegisterSimulatorRequest{
+		SenderId: senderId,
 		Simulator: &api.Simulator{
 			Id: sim.GetID(),
-			ServerAddress: sim.GetServerAddress(),
-			Neighbors: toSimulators(sim.GetNeighbors()),
+			Port: uint64(sim.GetPort()),
+			//Neighbors: toSimulators(sim.GetNeighbors()), not need
 		},
 	})
 	if err != nil {
-		log.Fatalf("could not greet: %v", err)
+		log.Fatalf("could not reuest [RegisterSimulator]: %v", err)
 	}
-	log.Printf("Get status: %s", r.GetStatus())
-	return toIArea(r.GetArea()), toIClock(r.GetClock()), toIAgents(r.GetAgents())
+	return toIArea(r.GetArea()), toIClock(r.GetClock()), toIAgents(r.GetAgents(), ea.App.GetScenarios()[0].GetModelMap()), toINeighbors(r.GetNeighbors()), int(r.GetPort())
 }
 
 
 type EngineService struct{
-	RegisterSimulatorHandler func() (app.IArea, app.IClock, []app.IAgent)
+	RegisterSimulatorHandler func() (app.IArea, app.IClock, []app.IAgent, []*Neighbor, int)
 	Port int
 	api.UnimplementedEngineServiceServer
 }
 
-func NewEngineService(port int, rsh func() (app.IArea, app.IClock, []app.IAgent)) *EngineService{
+func NewEngineService(port int, rsh func() (app.IArea, app.IClock, []app.IAgent, []*Neighbor, int)) *EngineService{
    es := &EngineService{
 	   Port: port,
 	   RegisterSimulatorHandler: rsh,
@@ -188,13 +198,15 @@ func (es *EngineService) Serve() {
 func (es *EngineService) RegisterSimulator(ctx context.Context, request *api.RegisterSimulatorRequest) (*api.RegisterSimulatorResponse, error) {
    fmt.Printf("getRequest %v\n", request)
 
-   area, clock, agents := es.RegisterSimulatorHandler()
+   area, clock, agents, neighbors, port := es.RegisterSimulatorHandler()
 
    response := &api.RegisterSimulatorResponse{
 	   Status: api.Status_OK,
 	   Area: toArea(area),
 	   Clock: toClock(clock),
 	   Agents: toAgents(agents),
+	   Neighbors: toNeighbors(neighbors),
+	   Port: uint64(port),
    }
    return response, nil
 }
@@ -262,29 +274,36 @@ func toAgents(agents []app.IAgent) []*api.Agent{
 	return apiAgents
 }
 
-func toIAgent(agent *api.Agent) app.IAgent{ // TODO convert Agent by model
-	return &app.Agent{
-		ID: agent.GetId(), 
-		Name: agent.GetName(), 
-		Position: toIPosition(agent.GetPosition()),
-	}
+func toIAgent(agent *api.Agent, modelMap app.ModelMap) app.IAgent{ // TODO convert Agent by model
+	name := agent.GetName()
+	modelFunc := modelMap[name]
+	iAgent := modelFunc(agent.GetId(),toIPosition(agent.GetPosition()))
+	return iAgent
 }
 
-func toIAgents(agents []*api.Agent) []app.IAgent{
+func toIAgents(agents []*api.Agent, modelMap app.ModelMap) []app.IAgent{
 	appAgents := []app.IAgent{}
 	for _, ag := range agents{
-		appAgents = append(appAgents, toIAgent(ag))
+		appAgents = append(appAgents, toIAgent(ag, modelMap))
 	}
 	return appAgents
 }
 
 func toSimulator(sim ISimulator) *api.Simulator{
+	neighbors := []*api.Neighbor{}
+	for _, nei := range sim.GetNeighbors(){
+		neighbors = append(neighbors, &api.Neighbor{
+			Id: nei.ID,
+			Port: uint64(nei.Port),
+		})
+	}
 	return &api.Simulator{
 		Id: sim.GetID(),
-		ServerAddress: sim.GetServerAddress(),
-		Neighbors: toSimulators(sim.GetNeighbors()),
+		Port: uint64(sim.GetPort()),
+		Neighbors: neighbors,
 	}
 }
+
 
 func toSimulators(sims []ISimulator) []*api.Simulator{
 	apiSims := []*api.Simulator{}
@@ -294,3 +313,34 @@ func toSimulators(sims []ISimulator) []*api.Simulator{
 	return apiSims
 }
 
+
+func toINeighbor(sim *api.Neighbor) *Neighbor{
+	return &Neighbor{
+		ID: sim.GetId(),
+		Port: int(sim.GetPort()),
+	}
+}
+
+func toINeighbors(neighbors []*api.Neighbor) []*Neighbor{
+	neis := []*Neighbor{}
+	for _, nei := range neighbors{
+		neis = append(neis, toINeighbor(nei))
+	}
+	return neis
+}
+
+func toNeighbor(nei *Neighbor) *api.Neighbor{
+	return &api.Neighbor{
+		Id: nei.ID,
+		Port: uint64(nei.Port),
+	}
+}
+
+
+func toNeighbors(neis []*Neighbor) []*api.Neighbor{
+	apiNeis := []*api.Neighbor{}
+	for _, nei := range neis{
+		apiNeis = append(apiNeis, toNeighbor(nei))
+	}
+	return apiNeis
+}

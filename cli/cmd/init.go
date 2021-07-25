@@ -112,7 +112,9 @@ func CreateProject(projectName string, templeteName string){
 
     color.Green("Project %s is created!\n\n", projectName)
     color.Green("You can run project by below command\n\n")
-    color.Green("$ cd %s\n$ simcli start\n", projectName)
+    color.Green("$ cd %s\n", projectName)
+    color.Green("$ simcli build   for building application\n")
+    color.Green("$ simcli run   for running built application\n")
 }
 
 func Init(){
