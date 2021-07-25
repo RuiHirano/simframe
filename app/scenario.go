@@ -9,11 +9,11 @@ type IScenario interface {
 	GetClock() IClock
 	GetAgents() []IAgent
 	GetModelMap() ModelMap
-	RegisterModel(modelList ModelList) 
+	RegisterModel(modelList []Model) 
 }
 
-type ModelMap map[string]func(id string, position *Position)IAgent
-type ModelList map[string]func(id string, position *Position)IAgent
+type ModelMap map[string]Model
+type Model func(id string, position *Position)IAgent
 
 type Scenario struct {
 	Area IArea
@@ -49,7 +49,7 @@ func (sn *Scenario) GetModelMap() ModelMap{
 	return sn.ModelMap
 }
 
-func (sn *Scenario) RegisterModel(models ModelList){
+func (sn *Scenario) RegisterModel(models []Model){
 	for _, modelFunc := range models{
 		md := modelFunc("", &Position{X: 0, Y: 0})
 		mdType := reflect.TypeOf(md).String()

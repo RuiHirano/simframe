@@ -262,8 +262,12 @@ func toAgents(agents []app.IAgent) []*api.Agent{
 	return apiAgents
 }
 
-func toIAgent(agent *api.Agent) *app.Agent{ // TODO to IAgent
-	return app.NewAgent(agent.GetId(), agent.GetName(), toIPosition(agent.GetPosition()))
+func toIAgent(agent *api.Agent) app.IAgent{ // TODO convert Agent by model
+	return &app.Agent{
+		ID: agent.GetId(), 
+		Name: agent.GetName(), 
+		Position: toIPosition(agent.GetPosition()),
+	}
 }
 
 func toIAgents(agents []*api.Agent) []app.IAgent{
