@@ -8,8 +8,8 @@ replace (
 )
 
 require (
-	github.com/RuiHirano/simframe/api v0.0.0-20210722053619-b424052e6aad
-	github.com/RuiHirano/simframe/app v0.0.0-20210722053619-b424052e6aad
+	github.com/RuiHirano/simframe/api v0.0.0-00010101000000-000000000000
+	github.com/RuiHirano/simframe/app v0.0.0-00010101000000-000000000000
 	github.com/google/uuid v1.1.2
 	google.golang.org/genproto v0.0.0-20210722135532-667f2b7c528f // indirect
 	google.golang.org/grpc v1.39.0
