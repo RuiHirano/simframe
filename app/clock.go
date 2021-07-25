@@ -13,7 +13,7 @@ type Clock struct {
 	Timestamp uint64
 }
 
-func NewClock(timestamp uint64) *Clock {
+func NewClock(timestamp uint64) IClock {
 
 	clock := &Clock{
 		Timestamp: timestamp,

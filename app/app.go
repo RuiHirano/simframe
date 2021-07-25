@@ -10,7 +10,7 @@ type App struct {
 	Config IConfig
 }
 
-func NewApp(sns []IScenario, conf IConfig) *App {
+func NewApp(sns []IScenario, conf IConfig) IApp {
 
 	app := &App{
 		Scenarios: sns,

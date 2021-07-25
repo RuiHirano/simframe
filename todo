@@ -10,5 +10,11 @@
     ☐ higashiyama
     ☐ centrair
 
-☐ simcli deleteで関連するsimulator podごと削除する
+☐ simcli deleteで関連するsimulator podごと削除する 
+✔ engineのsimulator imageをappから取得できるようにする @done(21-07-24 17:23)
 ☐ develop用にreplaceでできるようにする
+    ☐ builderをcliに入れる？
+☐ simulatorのsetup
+☐ syncronizerによるclock同期
+☐ 複数シナリオをengineでどう扱うか
+☐ データ変換の時にStepの情報をどう戻すか

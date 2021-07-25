@@ -16,6 +16,8 @@ github.com/RuiHirano/simframe/api v0.0.0-20210724081525-fe66fe4b2833 h1:alJlIJrS
 github.com/RuiHirano/simframe/api v0.0.0-20210724081525-fe66fe4b2833/go.mod h1:Xog/pyXD+S/LPEog59b0laVtOr7R1zxL1LYcAg/ZZi8=
 github.com/RuiHirano/simframe/api v0.0.0-20210724110720-69812e7b7811 h1:YWudJkcA5pRXSr9jUcRopS7zFcq8u596LfRU2uE1hu8=
 github.com/RuiHirano/simframe/api v0.0.0-20210724110720-69812e7b7811/go.mod h1:Xog/pyXD+S/LPEog59b0laVtOr7R1zxL1LYcAg/ZZi8=
+github.com/RuiHirano/simframe/api v0.0.0-20210725032351-12a207403e5a h1:tfPHi4PGaPevYRDianSgbFkcZGBPBS95GO3cpK7rc/Q=
+github.com/RuiHirano/simframe/api v0.0.0-20210725032351-12a207403e5a/go.mod h1:qSLqqqiN4v1gIKGJSXJ3rF25OXBng0igpTci2jRhz5c=
 github.com/RuiHirano/simframe/app v0.0.0-20210722053619-b424052e6aad h1:3CpMaElIhF4TRakN1G6FXjx/0IBpOs801FyxAYyGwQI=
 github.com/RuiHirano/simframe/app v0.0.0-20210722053619-b424052e6aad/go.mod h1:QwZJgDBVBeBzjBdG5R6lA0ADYvLh/KL9PPaz3zuIYwk=
 github.com/RuiHirano/simframe/app v0.0.0-20210723053719-919c02cc1445 h1:jFBF5lQXeRZOzrtG6X4qcndfxOb/3kaCZoUWXnMCXNw=
@@ -30,6 +32,8 @@ github.com/RuiHirano/simframe/app v0.0.0-20210724081525-fe66fe4b2833 h1:VvV29LFs
 github.com/RuiHirano/simframe/app v0.0.0-20210724081525-fe66fe4b2833/go.mod h1:t0L1QHpvYZzqM6hwY2p309eXDm01DYyHXnsSCxUddgo=
 github.com/RuiHirano/simframe/app v0.0.0-20210724110720-69812e7b7811 h1:65NAPmjU0uHsvOwiVKh1tpRqxfh7cgyC2HNWHNVWOZY=
 github.com/RuiHirano/simframe/app v0.0.0-20210724110720-69812e7b7811/go.mod h1:t0L1QHpvYZzqM6hwY2p309eXDm01DYyHXnsSCxUddgo=
+github.com/RuiHirano/simframe/app v0.0.0-20210725032351-12a207403e5a h1:KmlBNBKgh6nK08AnfrhWk/B6fdmOjTC8CaTdRH4FznM=
+github.com/RuiHirano/simframe/app v0.0.0-20210725032351-12a207403e5a/go.mod h1:UW1eAVFo7RHgd0Vhn1noqnJ7b0IdtBlzumN8e5mU+Ys=
 github.com/RuiHirano/simframe/app/config v0.0.0-20210721053332-f8df2845984a h1:ePyk+XnntBxFRCD9/3FtC/FiU43FXd3XqdNN2ayb/7E=
 github.com/RuiHirano/simframe/app/config v0.0.0-20210721053332-f8df2845984a/go.mod h1:IkRskGiBmeKQskZK/gVQ5AHDvfxCOZQUf5Wy4DRDxsA=
 github.com/RuiHirano/simframe/app/model v0.0.0-20210721053332-f8df2845984a h1:cYGo/0f2ZI9u/3mOW9mhvU2x+CmqwaBzW09xVsoEttY=

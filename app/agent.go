@@ -17,7 +17,7 @@ type Agent struct {
 	Position *Position
 }
 
-func NewAgent(id string, name string, position *Position) *Agent {
+func NewAgent(id string, name string, position *Position) IAgent {
 
 	agent := &Agent{
 		ID: id,

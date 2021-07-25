@@ -19,7 +19,7 @@ type Config struct{
 	Version string `json:"version"`
 }
 
-func NewConfig() *Config {
+func NewConfig() IConfig {
 
 	conf := &Config{}
 	conf.LoadConfig()

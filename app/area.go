@@ -11,7 +11,7 @@ type Area struct {
 	Space *Space
 }
 
-func NewArea(space *Space) *Area {
+func NewArea(space *Space) IArea {
 
 	area := &Area{
 		Space: space,
