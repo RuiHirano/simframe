@@ -3,8 +3,8 @@ module github.com/RuiHirano/simframe/engine
 go 1.13
 
 replace (
-	github.com/RuiHirano/simframe/api => ../api
-	github.com/RuiHirano/simframe/app => ../app
+	github.com/RuiHirano/simframe/api => ./api
+	github.com/RuiHirano/simframe/app => ./app
 )
 
 require (
