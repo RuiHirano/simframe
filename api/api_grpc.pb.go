@@ -18,6 +18,7 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type SimulatorServiceClient interface {
+	SetUpSimulator(ctx context.Context, in *SetUpSimulatorRequest, opts ...grpc.CallOption) (*SetUpSimulatorResponse, error)
 	RunSimulator(ctx context.Context, in *RunSimulatorRequest, opts ...grpc.CallOption) (*RunSimulatorResponse, error)
 	GetNeighborAgents(ctx context.Context, in *GetNeighborAgentsRequest, opts ...grpc.CallOption) (*GetNeighborAgentsResponse, error)
 }
@@ -28,6 +29,15 @@ type simulatorServiceClient struct {
 
 func NewSimulatorServiceClient(cc grpc.ClientConnInterface) SimulatorServiceClient {
 	return &simulatorServiceClient{cc}
+}
+
+func (c *simulatorServiceClient) SetUpSimulator(ctx context.Context, in *SetUpSimulatorRequest, opts ...grpc.CallOption) (*SetUpSimulatorResponse, error) {
+	out := new(SetUpSimulatorResponse)
+	err := c.cc.Invoke(ctx, "/api.SimulatorService/SetUpSimulator", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
 func (c *simulatorServiceClient) RunSimulator(ctx context.Context, in *RunSimulatorRequest, opts ...grpc.CallOption) (*RunSimulatorResponse, error) {
@@ -52,6 +62,7 @@ func (c *simulatorServiceClient) GetNeighborAgents(ctx context.Context, in *GetN
 // All implementations must embed UnimplementedSimulatorServiceServer
 // for forward compatibility
 type SimulatorServiceServer interface {
+	SetUpSimulator(context.Context, *SetUpSimulatorRequest) (*SetUpSimulatorResponse, error)
 	RunSimulator(context.Context, *RunSimulatorRequest) (*RunSimulatorResponse, error)
 	GetNeighborAgents(context.Context, *GetNeighborAgentsRequest) (*GetNeighborAgentsResponse, error)
 	mustEmbedUnimplementedSimulatorServiceServer()
@@ -61,6 +72,9 @@ type SimulatorServiceServer interface {
 type UnimplementedSimulatorServiceServer struct {
 }
 
+func (UnimplementedSimulatorServiceServer) SetUpSimulator(context.Context, *SetUpSimulatorRequest) (*SetUpSimulatorResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SetUpSimulator not implemented")
+}
 func (UnimplementedSimulatorServiceServer) RunSimulator(context.Context, *RunSimulatorRequest) (*RunSimulatorResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RunSimulator not implemented")
 }
@@ -78,6 +92,24 @@ type UnsafeSimulatorServiceServer interface {
 
 func RegisterSimulatorServiceServer(s grpc.ServiceRegistrar, srv SimulatorServiceServer) {
 	s.RegisterService(&SimulatorService_ServiceDesc, srv)
+}
+
+func _SimulatorService_SetUpSimulator_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SetUpSimulatorRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SimulatorServiceServer).SetUpSimulator(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/api.SimulatorService/SetUpSimulator",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SimulatorServiceServer).SetUpSimulator(ctx, req.(*SetUpSimulatorRequest))
+	}
+	return interceptor(ctx, in, info, handler)
 }
 
 func _SimulatorService_RunSimulator_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -123,6 +155,10 @@ var SimulatorService_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "api.SimulatorService",
 	HandlerType: (*SimulatorServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "SetUpSimulator",
+			Handler:    _SimulatorService_SetUpSimulator_Handler,
+		},
 		{
 			MethodName: "RunSimulator",
 			Handler:    _SimulatorService_RunSimulator_Handler,

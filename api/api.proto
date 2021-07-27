@@ -5,8 +5,20 @@ package api;
 option go_package="./api";
 
 service SimulatorService {
+    rpc SetUpSimulator(SetUpSimulatorRequest) returns (SetUpSimulatorResponse){}
     rpc RunSimulator(RunSimulatorRequest) returns (RunSimulatorResponse){}
     rpc GetNeighborAgents(GetNeighborAgentsRequest) returns (GetNeighborAgentsResponse){}
+}
+
+message SetUpSimulatorRequest{
+    Area area = 1;
+    Clock clock = 2;
+	repeated Agent agents = 3;
+    repeated Neighbor neighbors =4;
+}
+
+message SetUpSimulatorResponse{
+    Status status = 1;
 }
 
 message RunSimulatorRequest{
@@ -32,16 +44,12 @@ service EngineService {
 }
 
 message RegisterSimulatorRequest{
-    Simulator simulator = 1;
+    string id = 1;
 }
 
 message RegisterSimulatorResponse{
     Status status = 1;
-    Area area = 2;
-    Clock clock = 3;
-	repeated Agent agents = 4;
-    repeated Neighbor neighbors =5;
-    uint64 port = 6;
+    uint64 port =2;
 }
 
 message Simulator {
