@@ -3,8 +3,8 @@ module github.com/RuiHirano/simframe/engine
 go 1.13
 
 require (
-	github.com/RuiHirano/simframe/api v0.0.0-20210727050840-c1d77365e937
-	github.com/RuiHirano/simframe/app v0.0.0-20210727050840-c1d77365e937
+	github.com/RuiHirano/simframe/api v0.0.0-20210727071103-d7348f66134f
+	github.com/RuiHirano/simframe/app v0.0.0-20210727071103-d7348f66134f
 	github.com/fatih/color v1.12.0
 	github.com/google/uuid v1.1.2
 	golang.org/x/sync v0.0.0-20210220032951-036812b2e83c

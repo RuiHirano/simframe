@@ -136,8 +136,8 @@ func (sm *SimulatorManager) CalculateSimulators() {
 func (sm *SimulatorManager) ApplySimulators() {
 	color.Green("Applying simulators...\n")
 	generator := NewResourceGenerator(sm.App)
-	for i := 0; i < 4; i++ {
-		generator.Apply("simulator1"+strconv.Itoa(i), 9000+i)
+	for i := 0; i < 2; i++ {
+		generator.Apply(strconv.Itoa(i+1), 9000+i)
 	}
 }
 
