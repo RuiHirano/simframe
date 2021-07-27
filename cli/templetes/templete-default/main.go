@@ -5,6 +5,7 @@ import (
 	myapp "app"
 	"flag"
 	"os"
+	"strconv"
 
 	"github.com/fatih/color"
 
@@ -26,13 +27,15 @@ func main() {
 	flag.Parse()
     arg := flag.Arg(0)
     runType := flag.Arg(1)
+    id := flag.Arg(2)
+    port, _ := strconv.Atoi(flag.Arg(3))
 	switch arg {
 	case "run":	
 		switch runType {
 		case "engine":	
-			en.Run("ENGINE")
+			en.Run("ENGINE", "engine", 10000)
 		case "simulator":	
-			en.Run("SIMULATOR")
+			en.Run("SIMULATOR", id, port)
 		}
 	}
 	color.Red("invalid arg in engine\n")
