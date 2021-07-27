@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"runtime"
 
-	//"strconv"
+	"strconv"
 	"sync"
 
 	"github.com/RuiHirano/simframe/app"
@@ -135,10 +135,10 @@ func (sm *SimulatorManager) CalculateSimulators() {
 
 func (sm *SimulatorManager) ApplySimulators() {
 	color.Green("Applying simulators...\n")
-	/*generator := NewResourceGenerator(engine.App)
+	generator := NewResourceGenerator(sm.App)
 	for i := 0; i < 4; i++ {
-		generator.Apply(strconv.Itoa(i), 9000+i)
-	}*/
+		generator.Apply("simulator1"+strconv.Itoa(i), 9000+i)
+	}
 }
 
 func (sm *SimulatorManager) WaitSimulators() {
