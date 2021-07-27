@@ -270,7 +270,7 @@ func (bd *ResourceGenerator) NewSimulator(id string, port int) Resource {
 					Env: []Env{
 					},
 					Ports: []Port{{ContainerPort: port}},
-					Command: []string{"go", "run", "main.go", "run", "simulator"},
+					Command: []string{"go", "run", "main.go", "run", "simulator", "--port", strconv.Itoa(port)},
 				},
 			},
 		},

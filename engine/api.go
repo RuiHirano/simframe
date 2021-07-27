@@ -24,7 +24,7 @@ func NewSimulatorAPI(port int) *SimulatorAPI {
 	sa := &SimulatorAPI{
 		Port: port,
 	}
-	sa.SetUp()
+	//sa.SetUp()
 	return sa
 }
 
@@ -34,9 +34,24 @@ func (sa *SimulatorAPI) SetUp() {
 	if err != nil {
 		log.Fatalf("did not connect: %v", err)
 	}
-	defer conn.Close()
+	//defer conn.Close()
 	sa.Client = api.NewSimulatorServiceClient(conn)
 	color.Green("Success connecting to simulator.\n")
+}
+
+func (sa *SimulatorAPI) SetUpSimulator(area app.IArea, clock app.IClock, agents []app.IAgent, neighbors []*Neighbor) {
+	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
+	defer cancel()
+	r, err := sa.Client.SetUpSimulator(ctx, &api.SetUpSimulatorRequest{
+		Area: toArea(area),
+		Clock: toClock(clock),
+		Agents: toAgents(agents),
+		Neighbors: toNeighbors(neighbors),
+	})
+	if err != nil {
+		log.Fatalf("could not set up: %v", err)
+	}
+	log.Printf("Get status: %s", r.GetStatus())
 }
 
 func (sa *SimulatorAPI) RunSimulator(senderId string ) {
@@ -46,36 +61,39 @@ func (sa *SimulatorAPI) RunSimulator(senderId string ) {
 		SenderId: senderId,
 	})
 	if err != nil {
-		log.Fatalf("could not greet: %v", err)
+		log.Fatalf("could not run: %v", err)
 	}
 	log.Printf("Get status: %s", r.GetStatus())
 }
 
 func (sa *SimulatorAPI) GetNeighborAgents(senderId string, agents []app.IAgent) {
-	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
-	r, err := sa.Client.GetNeighborAgents(ctx, &api.GetNeighborAgentsRequest{
+	_, err := sa.Client.GetNeighborAgents(ctx, &api.GetNeighborAgentsRequest{
 		SenderId: senderId,
 		Agents: []*api.Agent{},
 	})
 	if err != nil {
-		log.Fatalf("could not greet: %v", err)
+		log.Fatalf("could not get neighbor agents: %v", err)
 	}
-	log.Printf("Get status: %s", r.GetStatus())
 }
 
 type SimulatorService struct{
+	App app.IApp
 	Port int
+	SetUpSimulatorHandler func(app.IArea, app.IClock, []app.IAgent, []*Neighbor)
 	RunSimulatorHandler func()
-	GetNeighborAgentsHandler func()
+	GetNeighborAgentsHandler func(id string, agents []app.IAgent)
 	api.UnimplementedSimulatorServiceServer
 }
 
-func NewSimulatorService(port int, rsh func(), gnah func()) *SimulatorService{
+func NewSimulatorService(ap app.IApp, port int, ssh func(app.IArea, app.IClock, []app.IAgent, []*Neighbor), rsh func(), gnah func(id string, agents []app.IAgent)) *SimulatorService{
    ms := &SimulatorService{
+	   App: ap,
 	   Port: port,
+	   SetUpSimulatorHandler: ssh,
 	   RunSimulatorHandler: rsh,
-	   GetNeighborAgentsHandler: rsh,
+	   GetNeighborAgentsHandler: gnah,
    }
    return ms
 }
@@ -97,8 +115,17 @@ func (es *SimulatorService)  Serve() {
 	server.Serve(lis)
 }
 
+func (es *SimulatorService) SetUpSimulator(ctx context.Context, request *api.SetUpSimulatorRequest) (*api.SetUpSimulatorResponse, error) {
+ 
+	es.SetUpSimulatorHandler(toIArea(request.GetArea()), toIClock(request.GetClock()),toIAgents(request.GetAgents(), es.App.GetScenarios()[0].GetModelMap()),toINeighbors(request.GetNeighbors()))
+ 
+	response := &api.SetUpSimulatorResponse{
+		Status: api.Status_OK,
+	}
+	return response, nil
+ }
+
 func (es *SimulatorService) RunSimulator(ctx context.Context, request *api.RunSimulatorRequest) (*api.RunSimulatorResponse, error) {
-   fmt.Printf("getRequest %v\n", request)
 
    es.RunSimulatorHandler()
 
@@ -109,9 +136,8 @@ func (es *SimulatorService) RunSimulator(ctx context.Context, request *api.RunSi
 }
 
 func (es *SimulatorService) GetNeighborAgents(ctx context.Context, request *api.GetNeighborAgentsRequest) (*api.GetNeighborAgentsResponse, error) {
-	fmt.Printf("getRequest %v\n", request)
  
-	es.GetNeighborAgentsHandler()
+	es.GetNeighborAgentsHandler(request.GetSenderId(), toIAgents(request.GetAgents(), es.App.GetScenarios()[0].GetModelMap()))
  
 	response := &api.GetNeighborAgentsResponse{
 		Status: api.Status_OK,
@@ -132,7 +158,7 @@ func NewEngineAPI(port int, ap app.IApp) *EngineAPI {
 		App: ap,
 		Port: port,
 	}
-	ea.SetUp()
+	//ea.SetUp()
 	return ea
 }
 
@@ -147,31 +173,27 @@ func (ea *EngineAPI) SetUp() {
 	color.Green("Success connecting to engine.\n")
 }
 
-func (ea *EngineAPI) RegisterSimulator(senderId string, sim ISimulator) (app.IArea, app.IClock, []app.IAgent, []*Neighbor, int){
+func (ea *EngineAPI) RegisterSimulator(simId string) (error, int){
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
 	defer cancel()
 	r, err := ea.Client.RegisterSimulator(ctx, &api.RegisterSimulatorRequest{
-		SenderId: senderId,
-		Simulator: &api.Simulator{
-			Id: sim.GetID(),
-			Port: uint64(sim.GetPort()),
-			//Neighbors: toSimulators(sim.GetNeighbors()), not need
-		},
+		Id: simId,
 	})
 	if err != nil {
 		log.Fatalf("could not reuest [RegisterSimulator]: %v", err)
+		return err, 0
 	}
-	return toIArea(r.GetArea()), toIClock(r.GetClock()), toIAgents(r.GetAgents(), ea.App.GetScenarios()[0].GetModelMap()), toINeighbors(r.GetNeighbors()), int(r.GetPort())
+	return nil, int(r.GetPort())
 }
 
 
 type EngineService struct{
-	RegisterSimulatorHandler func() (app.IArea, app.IClock, []app.IAgent, []*Neighbor, int)
+	RegisterSimulatorHandler func(id string) int
 	Port int
 	api.UnimplementedEngineServiceServer
 }
 
-func NewEngineService(port int, rsh func() (app.IArea, app.IClock, []app.IAgent, []*Neighbor, int)) *EngineService{
+func NewEngineService(port int, rsh func(id string) int) *EngineService{
    es := &EngineService{
 	   Port: port,
 	   RegisterSimulatorHandler: rsh,
@@ -198,14 +220,10 @@ func (es *EngineService) Serve() {
 func (es *EngineService) RegisterSimulator(ctx context.Context, request *api.RegisterSimulatorRequest) (*api.RegisterSimulatorResponse, error) {
    fmt.Printf("getRequest %v\n", request)
 
-   area, clock, agents, neighbors, port := es.RegisterSimulatorHandler()
+   port := es.RegisterSimulatorHandler(request.GetId())
 
    response := &api.RegisterSimulatorResponse{
 	   Status: api.Status_OK,
-	   Area: toArea(area),
-	   Clock: toClock(clock),
-	   Agents: toAgents(agents),
-	   Neighbors: toNeighbors(neighbors),
 	   Port: uint64(port),
    }
    return response, nil
